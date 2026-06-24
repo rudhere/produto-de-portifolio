@@ -1814,7 +1814,7 @@ function renderSkillsList(){
     `<div style="border:1px solid var(--gray-200);border-radius:3px;padding:.3rem .4rem;display:flex;align-items:center;gap:.35rem;background:var(--gray-50);">
       ${s.image
         ? `<img src="${s.image}" style="width:28px;height:28px;border-radius:3px;object-fit:cover;flex-shrink:0;cursor:pointer;" onclick="changeSkImage('${s.id}')" title="Trocar imagem">`
-        : `<span style="font-size:.65rem;color:var(--gold);flex-shrink:0;cursor:pointer;" onclick="changeSkImage('${s.id}')" title="Adicionar imagem">●</span>`}
+        : `<button onclick="changeSkImage('${s.id}')" title="Adicionar imagem de fundo" style="width:28px;height:28px;border-radius:3px;border:1.5px dashed var(--gray-300);background:var(--gray-50);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--gray-400);transition:var(--transition);">+</button>`}
       <span style="font-size:.7rem;color:var(--gray-700);font-weight:500;flex:1;min-width:0;">${esc(s.name)}</span>
       ${s.image ? `<button onclick="removeSkImage('${s.id}')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:.6rem;flex-shrink:0;padding:.1rem;" title="Remover imagem">✕</button>` : ''}
       <button onclick="removeSk('${s.id}')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:.65rem;flex-shrink:0;padding:.1rem;">×</button>
