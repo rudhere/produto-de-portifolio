@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio Profissional — Repórter Fotográfico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0D0D0D;
+  --black-2:#1A1A1A;
+  --black-3:#2A2A2A;
+  --white:#FFFFFF;
+  --gray-50:#FAFAFA;
+  --gray-100:#F5F5F5;
+  --gray-200:#E8E8E8;
+  --gray-300:#D9D9D9;
+  --gray-400:#B0B0B0;
+  --gray-500:#888888;
+  --gray-600:#666666;
+  --gray-700:#4A4A4A;
+  --gold:#D6A300;
+  --gold-light:#FFC107;
+  --gold-dark:#B38800;
+  --font-display:'Bebas Neue','Oswald',sans-serif;
+  --font-heading:'Oswald','Montserrat',sans-serif;
+  --font-title:'Montserrat','Inter',sans-serif;
+  --font-body:'Inter','Roboto','Source Sans 3',sans-serif;
+  --font-caption:'Source Sans 3','Inter',sans-serif;
+  --page-w:210mm;
+  --page-h:297mm;
+  --page-scale:0.45;
+  --pw:calc(var(--page-w) * var(--page-scale));
+  --ph:calc(var(--page-h) * var(--page-scale));
+  --shadow-sm:0 1px 2px rgba(0,0,0,.06);
+  --shadow-page:0 2px 20px rgba(0,0,0,.15),0 0 0 1px rgba(0,0,0,.04);
+  --radius:4px;
+  --transition:.2s ease;
+}
+[data-theme=dark]{
+  --black:#F0F0F0;
+  --black-2:#E0E0E0;
+  --black-3:#CCCCCC;
+  --white:#121212;
+  --gray-50:#1A1A1A;
+  --gray-100:#222;
+  --gray-200:#333;
+  --gray-300:#444;
+  --gray-400:#777;
+  --gray-500:#999;
+  --gray-600:#BBB;
+  --gray-700:#DDD;
+  --shadow-page:0 2px 20px rgba(0,0,0,.4),0 0 0 1px rgba(0,0,0,.2);
+}
+html{font-size:16px}
+body{
+  font-family:var(--font-body);
+  background:var(--gray-100);
+  color:var(--black-2);
+  overflow:hidden;
+  height:100vh;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+input,textarea,select{font-family:inherit;font-size:.8rem;color:var(--black-2)}
+img{max-width:100%;display:block}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gray-400)}
+
+/* ===== HEADER ===== */
+.app-header{
+  background:var(--black);
+  color:var(--white);
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 1.5rem;
+  border-bottom:3px solid var(--gold);
+  z-index:100;
+  position:relative;
+  flex-shrink:0;
+}
+.app-header .brand{
+  display:flex;align-items:center;gap:.75rem;
+}
+.app-header .brand-icon{
+  width:28px;height:28px;
+  background:var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;color:var(--black);font-weight:900;
+}
+.app-header .brand h1{
+  font-family:var(--font-display);
+  font-size:1.2rem;
+  letter-spacing:.08em;
+  font-weight:400;
+  color:var(--white);
+}
+.app-header .brand h1 span{color:var(--gold)}
+.header-actions{display:flex;gap:.35rem;align-items:center}
+.header-actions button,.header-actions label.file-btn{
+  padding:.35rem .65rem;
+  background:transparent;
+  color:var(--gray-400);
+  border:1px solid var(--gray-700);
+  border-radius:3px;
+  font-size:.65rem;
+  font-weight:500;
+  transition:var(--transition);
+  white-space:nowrap;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+}
+.header-actions button:hover,.header-actions label.file-btn:hover{
+  background:var(--gold);
+  color:var(--black);
+  border-color:var(--gold);
+}
+.header-actions button.primary{
+  background:var(--gold);
+  color:var(--black);
+  border-color:var(--gold);
+  font-weight:600;
+}
+.header-actions button.primary:hover{background:var(--gold-dark)}
+
+/* ===== LAYOUT ===== */
+.app-layout{
+  display:flex;
+  height:calc(100vh - 56px);
+}
+
+/* ===== EDITOR PANEL ===== */
+.editor-panel{
+  width:35%;
+  min-width:340px;
+  max-width:460px;
+  background:var(--white);
+  border-right:1px solid var(--gray-200);
+  display:flex;
+  flex-direction:column;
+  flex-shrink:0;
+}
+.editor-tabs{
+  display:flex;
+  background:var(--gray-50);
+  border-bottom:2px solid var(--gold);
+  flex-shrink:0;
+  overflow-x:auto;
+}
+.editor-tab{
+  padding:.7rem 1rem;
+  font-size:.7rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--gray-500);
+  transition:var(--transition);
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;
+  white-space:nowrap;
+  background:transparent;
+}
+.editor-tab:hover{color:var(--gold)}
+.editor-tab.active{
+  color:var(--gold);
+  border-bottom-color:var(--gold);
+  background:var(--white);
+}
+.editor-content{
+  flex:1;
+  overflow-y:auto;
+  padding:0;
+}
+.editor-section{display:none;padding:1.25rem}
+.editor-section.active{display:block}
+.editor-section h2{
+  font-family:var(--font-heading);
+  font-size:1rem;
+  font-weight:600;
+  color:var(--black);
+  margin-bottom:1rem;
+  padding-bottom:.4rem;
+  border-bottom:2px solid var(--gold);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.form-group{margin-bottom:.8rem}
+.form-group label{
+  display:block;
+  font-size:.68rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  color:var(--gray-500);
+  margin-bottom:.2rem;
+}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;
+  padding:.5rem .65rem;
+  border:1px solid var(--gray-200);
+  border-radius:3px;
+  background:var(--gray-50);
+  color:var(--black-2);
+  transition:var(--transition);
+  font-size:.8rem;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(214,163,0,.12);
+}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+
+/* Photo upload */
+.profile-photo-upload{
+  width:90px;height:90px;
+  border-radius:50%;
+  overflow:hidden;
+  border:3px solid var(--gold);
+  cursor:pointer;
+  margin-bottom:.75rem;
+  background:var(--gray-100);
+  position:relative;
+}
+.profile-photo-upload img{width:100%;height:100%;object-fit:cover}
+.profile-photo-upload .placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray-400);font-size:1.8rem;
+}
+.profile-photo-upload input{display:none}
+
+/* Buttons */
+.btn{
+  padding:.5rem 1rem;
+  border-radius:3px;
+  font-size:.73rem;
+  font-weight:600;
+  transition:var(--transition);
+  display:inline-flex;align-items:center;gap:.35rem;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+.btn-gold{
+  background:var(--gold);
+  color:var(--black);
+  border:none;
+}
+.btn-gold:hover{background:var(--gold-dark)}
+.btn-outline{
+  background:transparent;
+  color:var(--gray-600);
+  border:1px solid var(--gray-300);
+}
+.btn-outline:hover{background:var(--gray-100)}
+.btn-danger{
+  background:#DC2626;color:white;border:none;
+}
+.btn-danger:hover{background:#B91C1C}
+.btn-sm{padding:.3rem .55rem;font-size:.65rem}
+.btn-full{width:100%;justify-content:center}
+.btn-icon{width:28px;height:28px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:3px;font-size:.75rem}
+
+/* Report card in editor */
+.report-card{
+  background:var(--gray-50);
+  border:1px solid var(--gray-200);
+  border-radius:var(--radius);
+  padding:.75rem;
+  margin-bottom:.6rem;
+  transition:var(--transition);
+  cursor:pointer;
+}
+.report-card:hover{border-color:var(--gold)}
+.report-card h4{
+  font-family:var(--font-heading);
+  font-size:.82rem;
+  font-weight:500;
+  color:var(--black);
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+.report-card .meta{
+  font-size:.68rem;
+  color:var(--gray-500);
+  margin-top:.15rem;
+}
+.report-card .actions{
+  display:flex;gap:.3rem;margin-top:.4rem;
+}
+.report-card .actions button{
+  padding:.2rem .5rem;
+  font-size:.62rem;
+  border:1px solid var(--gray-200);
+  background:var(--white);
+  border-radius:3px;
+  color:var(--gray-600);
+  transition:var(--transition);
+}
+.report-card .actions button:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+/* Tags */
+.tag-list{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.5rem}
+.tag{
+  padding:.25rem .55rem;
+  background:var(--gray-100);
+  border:1px solid var(--gray-200);
+  border-radius:3px;
+  font-size:.7rem;
+  color:var(--gray-700);
+  display:flex;align-items:center;gap:.3rem;
+}
+.tag button{
+  background:none;border:none;
+  color:var(--gray-400);font-size:.7rem;
+  line-height:1;cursor:pointer;
+}
+.tag button:hover{color:#DC2626}
+
+/* Equipment types */
+.eq-item{
+  display:flex;align-items:center;gap:.3rem;
+  padding:.25rem .5rem;
+  background:var(--gray-50);
+  border:1px solid var(--gray-200);
+  border-radius:3px;
+  font-size:.72rem;
+}
+.eq-item .type-badge{
+  font-size:.55rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  font-weight:600;
+  color:var(--gold);
+  padding:0 .25rem;
+}
+
+/* Publications list */
+.pub-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.5rem .6rem;
+  background:var(--gray-50);
+  border:1px solid var(--gray-200);
+  border-radius:3px;
+  margin-bottom:.4rem;
+}
+.pub-item h5{font-size:.78rem;font-weight:600;color:var(--black)}
+.pub-item span{font-size:.65rem;color:var(--gray-500)}
+.pub-item button{color:var(--gray-400);font-size:.75rem;padding:.15rem}
+.pub-item button:hover{color:#DC2626}
+
+/* Settings */
+.setting-row{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.4rem 0;
+}
+.setting-row input[type=checkbox]{width:auto;accent-color:var(--gold)}
+.setting-row label{font-size:.78rem;cursor:pointer}
+.setting-row select{flex:1;padding:.35rem;border:1px solid var(--gray-200);border-radius:3px;font-size:.75rem}
+
+/* ===== PREVIEW PANEL ===== */
+.preview-panel{
+  flex:1;
+  background:var(--gray-100);
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:2.5rem 1rem;
+}
+.preview-pages{width:100%;display:flex;flex-direction:column;align-items:center;gap:0}
+
+/* ===== PAGE ===== */
+.page{
+  width:var(--pw);
+  height:var(--ph);
+  background:var(--white);
+  box-shadow:var(--shadow-page);
+  position:relative;
+  overflow:hidden;
+  margin-bottom:2.5rem;
+  display:flex;
+  flex-direction:column;
+  flex-shrink:0;
+}
+.page-inner{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  padding:0;
+  min-height:0;
+  overflow:hidden;
+}
+.page-number{
+  position:absolute;
+  bottom:.6rem;
+  right:.8rem;
+  font-family:var(--font-caption);
+  font-size:.55rem;
+  color:var(--gray-400);
+  letter-spacing:.05em;
+  z-index:5;
+}
+
+/* ===== WATERMARK ===== */
+.watermark{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;z-index:3;
+  font-family:var(--font-display);
+  font-size:3.5rem;
+  color:var(--black);
+  opacity:.04;
+  transform:rotate(-25deg);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+/* ===== COVER PAGE ===== */
+.cover{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.cover-bg{
+  position:absolute;inset:0;z-index:0;
+  overflow:hidden;
+}
+.cover-bg img{
+  width:100%;height:100%;object-fit:cover;
+}
+.cover-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.75) 60%,rgba(0,0,0,.95) 100%);
+  z-index:1;
+}
+.cover-content{
+  position:relative;z-index:2;
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  justify-content:flex-end;
+}
+.cover-content .cover-tag{
+  font-family:var(--font-display);
+  font-size:.7rem;
+  letter-spacing:.15em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:.3rem;
+  font-weight:400;
+}
+.cover-content h1{
+  font-family:var(--font-display);
+  font-size:2.8rem;
+  line-height:.92;
+  color:var(--white);
+  font-weight:400;
+  letter-spacing:.01em;
+  margin-bottom:.1rem;
+}
+.cover-content h1 .gold{color:var(--gold)}
+.cover-content .cover-name{
+  font-family:var(--font-title);
+  font-size:1.1rem;
+  font-weight:300;
+  color:rgba(255,255,255,.9);
+  margin-bottom:1rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.cover-contact{
+  display:flex;flex-wrap:wrap;gap:.35rem .7rem;
+  margin-top:.2rem;
+}
+.cover-contact span{
+  font-family:var(--font-caption);
+  font-size:.55rem;
+  color:rgba(255,255,255,.55);
+  letter-spacing:.03em;
+  display:flex;align-items:center;gap:.25rem;
+}
+/* ===== TOC ===== */
+.toc{padding:2rem;flex:1;display:flex;flex-direction:column;min-height:0}
+.toc h2{
+  font-family:var(--font-display);
+  font-size:2rem;
+  text-align:center;
+  color:var(--black);
+  letter-spacing:.06em;
+  font-weight:400;
+  margin-bottom:.15rem;
+}
+.toc .toc-sub{
+  text-align:center;
+  font-family:var(--font-caption);
+  font-size:.5rem;
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  font-weight:600;
+  margin-bottom:.6rem;
+}
+.toc .toc-line{
+  width:40px;height:2px;
+  background:var(--gold);
+  margin:0 auto .8rem;
+}
+.toc-list{list-style:none;flex:1;display:flex;flex-direction:column;gap:.15rem;min-height:0}
+.toc-list li{
+  display:flex;align-items:center;
+  padding:.2rem 0;
+  border-bottom:1px solid var(--gray-100);
+  font-size:.6rem;
+  color:var(--gray-600);
+}
+.toc-list li .toc-num{
+  font-family:var(--font-display);
+  font-size:.95rem;
+  color:var(--gold);
+  width:28px;
+  text-align:right;
+  margin-right:.5rem;
+  font-weight:400;
+  line-height:1;
+}
+.toc-list li .toc-title{flex:1;color:var(--black-2);font-weight:500}
+.toc-list li .toc-page-num{
+  font-family:var(--font-display);
+  font-size:.8rem;
+  color:var(--gray-400);
+  font-weight:400;
+}
+
+/* ===== ABOUT PAGE ===== */
+.about{display:grid;grid-template-columns:1.2fr 1fr;flex:1;min-height:0}
+.about-left{padding:1.5rem;display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--gray-200);}
+.about-left h2{
+  font-family:var(--font-display);
+  font-size:1.6rem;
+  color:var(--black);
+  font-weight:400;
+  letter-spacing:.03em;
+  margin-bottom:.3rem;
+  line-height:1;
+  flex-shrink:0;
+}
+.about-left .about-sub{
+  font-family:var(--font-caption);
+  font-size:.5rem;
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:600;
+  margin-bottom:.6rem;
+  flex-shrink:0;
+}
+.about-left .about-bio{
+  font-size:.58rem;
+  color:var(--gray-600);
+  line-height:1.7;
+  flex:1;
+  overflow-y:auto;
+  min-height:0;
+  padding-right:.4rem;
+}
+.about-right{
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.about-right .about-photo{
+  width:100%;height:50%;
+  object-fit:cover;
+  flex-shrink:0;
+}
+.about-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.3rem;
+  padding:.5rem .6rem;
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+  align-content:center;
+}
+.about-card{
+  border:1px solid var(--gray-200);
+  border-radius:2px;
+  padding:.3rem .5rem;
+  display:flex;
+  align-items:center;
+  gap:.35rem;
+  min-height:0;
+}
+.about-card .card-icon{font-size:.7rem;color:var(--gold);flex-shrink:0;line-height:1;width:12px;text-align:center}
+.about-card .card-label{
+  font-family:var(--font-caption);
+  font-size:.5rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--gray-600);
+  font-weight:600;
+  line-height:1.2;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* ===== REPORT OPENING ===== */
+.report-opening{
+  position:relative;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+.report-opening .rop-bg{
+  position:absolute;inset:0;z-index:0;
+}
+.report-opening .rop-bg img{width:100%;height:100%;object-fit:cover}
+.report-opening .rop-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.6) 50%,rgba(0,0,0,.9) 100%);
+  z-index:1;
+}
+.report-opening .rop-content{
+  position:relative;z-index:2;
+  padding:1.5rem;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  justify-content:flex-end;
+}
+.report-opening .rop-category{
+  font-family:var(--font-caption);
+  font-size:.5rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--gold);
+  font-weight:600;
+}
+.report-opening .rop-title{
+  font-family:var(--font-display);
+  font-size:2.2rem;
+  line-height:.9;
+  color:var(--white);
+  font-weight:400;
+  letter-spacing:-.01em;
+  margin:.1rem 0 .15rem;
+}
+.report-opening .rop-meta{
+  font-family:var(--font-caption);
+  font-size:.48rem;
+  color:rgba(255,255,255,.5);
+  display:flex;gap:.5rem;
+}
+.report-opening .rop-context{
+  font-size:.55rem;
+  color:rgba(255,255,255,.7);
+  margin-top:.35rem;
+  line-height:1.5;
+  max-width:80%;
+  font-style:italic;
+}
+.report-opening .rop-credits{
+  font-size:.45rem;
+  color:rgba(255,255,255,.35);
+  margin-top:.3rem;
+}
+
+/* ===== REPORT GALLERY PAGE ===== */
+.rpage{padding:1rem;flex:1;display:flex;flex-direction:column;gap:.5rem;min-height:0}
+.rpage-header{}
+.rpage-header h3{
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  color:var(--black);
+  font-weight:400;
+  line-height:1;
+}
+.rpage-grid{
+  display:grid;
+  gap:.35rem;
+  flex:1;
+  min-height:0;
+}
+.rpage-grid.layout-2{grid-template-columns:1fr 1fr}
+.rpage-grid.layout-3{grid-template-columns:1fr 1fr 1fr}
+.rpage-grid.layout-mixed{
+  grid-template-columns:1fr 1fr;
+  grid-auto-rows:minmax(80px,auto);
+}
+.rpage-grid .photo-cell{
+  overflow:hidden;
+  border-radius:1px;
+  position:relative;
+  background:var(--gray-100);
+}
+.rpage-grid .photo-cell img{
+  width:100%;height:100%;object-fit:cover;
+  transition:var(--transition);
+}
+.rpage-grid .photo-cell .photo-info{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,.7));
+  padding:.3rem .4rem;
+  opacity:0;
+  transition:opacity .25s;
+}
+.rpage-grid .photo-cell:hover .photo-info{opacity:1}
+.rpage-grid .photo-cell .photo-info .pi-caption{
+  font-size:.45rem;
+  color:#fff;
+  line-height:1.3;
+}
+.rpage-grid .photo-cell .photo-info .pi-meta{
+  font-size:.38rem;
+  color:rgba(255,255,255,.5);
+  display:flex;gap:.3rem;margin-top:.1rem;
+}
+.photo-cell.span-2{grid-column:span 2}
+.photo-cell.span-row-2{grid-row:span 2}
+.photo-cell.full-w{grid-column:1/-1}
+.photo-cell.tall{grid-row:span 2}
+
+.context-block{
+  background:var(--gray-50);
+  border:1px solid var(--gray-200);
+  border-radius:2px;
+  padding:.6rem .75rem;
+}
+.context-block h4{
+  font-family:var(--font-heading);
+  font-size:.6rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--gold);
+  margin-bottom:.15rem;
+}
+.context-block p{
+  font-size:.55rem;
+  color:var(--gray-600);
+  line-height:1.6;
+  font-style:italic;
+}
+
+/* ===== EQUIPMENT PAGE ===== */
+.eq-page{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:0}
+.eq-left{overflow:hidden}
+.eq-left img{width:100%;height:100%;object-fit:cover}
+.eq-right{padding:1.2rem;display:flex;flex-direction:column;gap:.6rem;overflow-y:auto}
+.eq-right h2{
+  font-family:var(--font-display);
+  font-size:1.5rem;
+  font-weight:400;
+  color:var(--black);
+  letter-spacing:.03em;
+  line-height:1;
+}
+.eq-group{}
+.eq-group h5{
+  font-family:var(--font-heading);
+  font-size:.58rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--gold);
+  border-bottom:1px solid var(--gray-200);
+  padding-bottom:.15rem;
+  margin-bottom:.2rem;
+}
+.eq-group ul{list-style:none}
+.eq-group ul li{
+  font-size:.55rem;
+  color:var(--gray-600);
+  padding:.1rem 0;
+  display:flex;align-items:center;gap:.3rem;
+}
+.eq-group ul li::before{content:"—";color:var(--gold);font-size:.5rem}
+
+/* ===== SKILLS PAGE ===== */
+.skills-page{padding:1.2rem;flex:1;display:flex;flex-direction:column;min-height:0}
+.skills-page h2{
+  font-family:var(--font-display);
+  font-size:1.5rem;
+  font-weight:400;
+  color:var(--black);
+  letter-spacing:.03em;
+  line-height:1;
+  margin-bottom:.6rem;
+}
+.skills-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.3rem;
+  flex:1;
+  min-height:0;
+}
+.skill-item{
+  display:flex;align-items:center;gap:.4rem;
+  padding:.35rem .5rem;
+  border:1px solid var(--gray-200);
+  border-radius:2px;
+}
+.skill-item .sk-icon{color:var(--gold);font-size:.65rem;width:18px;text-align:center}
+.skill-item .sk-name{font-size:.58rem;color:var(--gray-700);font-weight:500}
+
+/* ===== PUBLICATIONS PAGE ===== */
+.pubs-page{padding:1.2rem;flex:1;display:flex;flex-direction:column;min-height:0}
+.pubs-page h2{
+  font-family:var(--font-display);
+  font-size:1.5rem;
+  font-weight:400;
+  color:var(--black);
+  letter-spacing:.03em;
+  line-height:1;
+  margin-bottom:.6rem;
+}
+.pubs-table{width:100%;border-collapse:collapse;font-size:.55rem}
+.pubs-table th{
+  text-align:left;
+  font-family:var(--font-heading);
+  font-size:.5rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--gold);
+  border-bottom:1px solid var(--gold);
+  padding:.25rem .3rem;
+}
+.pubs-table td{
+  padding:.25rem .3rem;
+  border-bottom:1px solid var(--gray-100);
+  color:var(--gray-600);
+  vertical-align:top;
+}
+.pubs-table td:first-child{font-weight:600;color:var(--black-2)}
+.pubs-table a{color:var(--gold);text-decoration:none;font-weight:500}
+
+/* ===== FINAL / CONTACT PAGE ===== */
+.final-page{
+  position:relative;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:2rem;
+  min-height:0;
+  text-align:center;
+}
+.final-page .final-bg{
+  position:absolute;inset:0;z-index:0;
+  opacity:.06;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8rem;
+  pointer-events:none;
+}
+.final-page h2{
+  font-family:var(--font-display);
+  font-size:1.8rem;
+  font-weight:400;
+  color:var(--black);
+  letter-spacing:.05em;
+  z-index:1;
+  line-height:1;
+}
+.final-page .final-name{
+  font-family:var(--font-title);
+  font-size:1rem;
+  font-weight:300;
+  color:var(--gray-600);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:.6rem;
+  z-index:1;
+}
+.final-contact{
+  display:flex;flex-direction:column;gap:.2rem;
+  z-index:1;
+  margin-top:.3rem;
+}
+.final-contact span{
+  font-size:.58rem;
+  color:var(--gray-500);
+  display:flex;align-items:center;justify-content:center;gap:.3rem;
+}
+
+.final-line{
+  width:30px;height:1px;
+  background:var(--gold);
+  margin:.3rem auto;
+  z-index:1;
+}
+.final-sig{
+  margin-top:.4rem;z-index:1;
+}
+.final-sig img{max-height:35px;display:inline-block}
+.final-sig .sig-label{
+  font-size:.45rem;
+  color:var(--gray-400);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state{
+  text-align:center;padding:1.5rem;color:var(--gray-400);font-size:.75rem;
+}
+.empty-state p{margin-bottom:.3rem}
+
+/* ===== TOAST ===== */
+.toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  padding:.6rem 1rem;
+  background:var(--black);
+  color:var(--white);
+  border-radius:3px;
+  font-size:.75rem;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+  z-index:300;
+  opacity:0;
+  transform:translateY(15px);
+  transition:all .3s ease;
+  pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ===== MODAL ===== */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:200;
+  display:none;
+  align-items:center;justify-content:center;
+  padding:1rem;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--white);
+  border-radius:6px;
+  width:100%;max-width:620px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:1.5rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.modal h2{
+  font-family:var(--font-display);
+  font-size:1.3rem;
+  font-weight:400;
+  color:var(--black);
+  letter-spacing:.03em;
+  margin-bottom:1rem;
+  padding-bottom:.3rem;
+  border-bottom:2px solid var(--gold);
+}
+.modal-actions{
+  display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;
+}
+.modal-actions button{
+  padding:.45rem 1rem;
+  border-radius:3px;
+  font-size:.72rem;
+  font-weight:600;
+  border:1px solid var(--gray-200);
+  background:var(--white);
+  color:var(--gray-600);
+}
+.modal-actions button.btn-gold{color:var(--black);border-color:var(--gold)}
+
+/* Gallery thumbs in modal */
+.gallery-thumbs{
+  display:flex;flex-wrap:wrap;gap:.3rem;
+  margin-top:.3rem;min-height:60px;
+}
+.gthumb{
+  width:64px;height:64px;
+  border-radius:3px;
+  overflow:hidden;
+  border:2px solid var(--gray-200);
+  position:relative;
+  cursor:grab;
+  flex-shrink:0;
+}
+.gthumb img{width:100%;height:100%;object-fit:cover}
+.gthumb .gthumb-remove{
+  position:absolute;top:1px;right:1px;
+  width:16px;height:16px;
+  border-radius:50%;background:rgba(220,38,38,.85);
+  color:#fff;border:none;
+  font-size:.4rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;transition:var(--transition);
+}
+.gthumb:hover .gthumb-remove{opacity:1}
+.gthumb .gthumb-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(0,0,0,.5);
+  color:#fff;font-size:.38rem;
+  padding:1px 3px;
+  text-overflow:ellipsis;overflow:hidden;white-space:nowrap;
+  cursor:pointer;
+}
+.gthumb.dragging{opacity:.4}
+.photo-size-select{
+  font-size:.5rem;padding:.15rem .3rem;
+  border:1px solid var(--gray-200);
+  border-radius:2px;
+  background:var(--gray-50);
+  position:absolute;bottom:16px;left:1px;right:1px;
+  opacity:0;transition:var(--transition);
+  width:calc(100% - 2px);
+  z-index:5;
+}
+.gthumb:hover .photo-size-select{opacity:1}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .editor-panel{min-width:280px;max-width:380px}
+}
+@media(max-width:850px){
+  .app-layout{flex-direction:column;height:auto}
+  .editor-panel{width:100%;min-width:unset;max-width:unset;max-height:45vh;border-right:none;border-bottom:1px solid var(--gray-200)}
+  .preview-panel{min-height:55vh}
+  .app-header{height:auto;padding:.5rem .8rem;flex-wrap:wrap;gap:.3rem}
+  .app-header .brand h1{font-size:.9rem}
+  .header-actions{gap:.2rem}
+  .header-actions button,.header-actions label.file-btn{font-size:.55rem;padding:.25rem .4rem}
+  :root{--page-scale:0.3}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-icon">J</div>
+    <h1>PhotoJournalist <span>Portfolio</span></h1>
+  </div>
+  <div class="header-actions">
+    <button onclick="exportPDF()">PDF</button>
+    <button onclick="exportHTML()">HTML</button>
+    <button onclick="exportJSON()">JSON</button>
+    <label class="file-btn">Importar<input type="file" accept=".json" onchange="importJSON(event)" style="display:none"></label>
+    <button onclick="toggleDark()" id="darkBtn">Tema</button>
+  </div>
+</header>
+
+<!-- ===== LAYOUT ===== -->
+<div class="app-layout">
+
+<!-- EDITOR -->
+<div class="editor-panel">
+  <div class="editor-tabs">
+    <button class="editor-tab active" data-tab="profile">Perfil</button>
+    <button class="editor-tab" data-tab="reports">Reportagens</button>
+    <button class="editor-tab" data-tab="equipment">Equip.</button>
+    <button class="editor-tab" data-tab="skills">Compet.</button>
+    <button class="editor-tab" data-tab="publications">Pub.</button>
+    <button class="editor-tab" data-tab="settings">Config.</button>
+  </div>
+  <div class="editor-content">
+
+    <!-- PROFILE -->
+    <div class="editor-section active" id="sec-profile">
+      <h2>Perfil Profissional</h2>
+      <div class="profile-photo-upload" onclick="document.getElementById('profPhoto').click()">
+        <img id="profPhotoImg" src="" style="display:none" alt="">
+        <div class="placeholder" id="profPhotoPlaceholder">+</div>
+        <input type="file" id="profPhoto" accept="image/*" onchange="handleProfilePhoto(event)">
+      </div>
+      <div class="form-group"><label>Nome completo</label><input type="text" id="f_name" oninput="sync()" placeholder="Seu nome"></div>
+      <div class="form-group"><label>Título profissional</label><input type="text" id="f_title" oninput="sync()" placeholder="Repórter Fotográfico"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Telefone</label><input type="text" id="f_phone" oninput="sync()" placeholder="(11) 99999-0000"></div>
+        <div class="form-group"><label>E-mail</label><input type="email" id="f_email" oninput="sync()" placeholder="email@exemplo.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Cidade</label><input type="text" id="f_city" oninput="sync()" placeholder="São Paulo, SP"></div>
+        <div class="form-group"><label>LinkedIn</label><input type="text" id="f_linkedin" oninput="sync()" placeholder="linkedin.com/in/seuperfil"></div>
+      </div>
+      <div class="form-group"><label>Foto de capa (fundo da capa)</label><input type="file" accept="image/*" onchange="handleCoverPhoto(event)"></div>
+      <div id="coverPhotoPreview" style="max-height:60px;overflow:hidden;border-radius:3px;margin-bottom:.5rem;display:none;"><img src="" style="width:100%;object-fit:cover;"></div>
+      <div class="form-group"><label>Resumo / Biografia</label><textarea id="f_bio" oninput="sync()" rows="4" placeholder="Escreva sua biografia profissional..."></textarea></div>
+    </div>
+
+    <!-- REPORTS -->
+    <div class="editor-section" id="sec-reports">
+      <h2>Reportagens</h2>
+      <button class="btn btn-gold btn-full" onclick="openReportModal()">+ Nova Reportagem</button>
+      <div id="reportsList" style="margin-top:.6rem"></div>
+    </div>
+
+    <!-- EQUIPMENT -->
+    <div class="editor-section" id="sec-equipment">
+      <h2>Equipamentos</h2>
+      <div class="form-row">
+        <div class="form-group"><label>Tipo</label><select id="eqType">
+          <option value="camera">Câmera</option>
+          <option value="lens">Lente</option>
+          <option value="drone">Drone</option>
+          <option value="smartphone">Smartphone</option>
+          <option value="extra">Acessório</option>
+        </select></div>
+        <div class="form-group"><label>Equipamento</label>
+          <div style="display:flex;gap:.3rem">
+            <input type="text" id="eqName" placeholder="Nome" style="flex:1" onkeydown="if(event.key==='Enter')addEq()">
+            <button class="btn btn-gold btn-sm" onclick="addEq()">+</button>
+          </div>
+        </div>
+      </div>
+      <div id="equipmentList" class="tag-list" style="margin-top:.3rem"></div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="editor-section" id="sec-skills">
+      <h2>Competências</h2>
+      <div class="form-group">
+        <label>Descrição da seção</label>
+        <input type="text" id="skDesc" placeholder="Ex: Áreas de atuação e especialidades" oninput="syncSkillsDesc()" style="font-size:.75rem;">
+      </div>
+      <div style="display:flex;gap:.3rem;margin-bottom:.6rem;">
+        <input type="text" id="skName" placeholder="Ex: Fotojornalismo" style="flex:1;padding:.45rem .6rem;border:1px solid var(--gray-200);border-radius:3px;font-size:.75rem;" onkeydown="if(event.key==='Enter')addSk()">
+        <button class="btn btn-gold" onclick="addSk()" style="padding:.45rem .7rem;border:none;border-radius:3px;font-weight:600;white-space:nowrap;">Adicionar</button>
+      </div>
+      <div id="skillsList" style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;"></div>
+    </div>
+
+    <!-- PUBLICATIONS -->
+    <div class="editor-section" id="sec-publications">
+      <h2>Publicações</h2>
+      <div style="background:var(--gray-50);padding:.7rem;border-radius:var(--radius);border:1px solid var(--gray-200);margin-bottom:.6rem;">
+        <div class="form-group"><label>Veículo</label><input type="text" id="pubName" placeholder="Nome do veículo"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Link</label><input type="url" id="pubLink" placeholder="https://"></div>
+          <div class="form-group"><label>Data</label><input type="date" id="pubDate"></div>
+        </div>
+        <div class="form-group"><label>Descrição</label><textarea id="pubDesc" rows="2" placeholder="Descrição..."></textarea></div>
+        <button class="btn btn-gold btn-sm btn-full" onclick="addPub()">Adicionar</button>
+      </div>
+      <div id="publicationsList"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="editor-section" id="sec-settings">
+      <h2>Configurações</h2>
+      <div class="setting-row">
+        <input type="checkbox" id="chkWatermark" onchange="sync()">
+        <label for="chkWatermark">Marca d'água</label>
+      </div>
+      <div class="form-group" id="wmTextGroup" style="display:none">
+        <label>Texto da marca d'água</label>
+        <input type="text" id="wmText" value="FOTOJORNALISTA" oninput="sync()">
+      </div>
+      <div class="setting-row">
+        <label style="flex:1">Template de capa</label>
+        <select id="coverTmpl" onchange="sync()" style="flex:1.5">
+          <option value="1">Full Bleed — Escuro</option>
+          <option value="2">Split — Foto + Preto</option>
+          <option value="3">Clássico — Limpo</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-top:.5rem">
+        <label>Assinatura profissional</label>
+        <input type="file" accept="image/*" onchange="handleSig(event)" style="font-size:.7rem">
+        <div id="sigPreview" style="margin-top:.3rem;display:none">
+          <img src="" style="max-height:40px;">
+          <button onclick="clearSig()" style="font-size:.6rem;color:#DC2626;display:block;margin-top:.2rem;">Remover</button>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--gray-200);margin:1rem 0">
+      <button class="btn btn-danger btn-full" onclick="clearAll()">Limpar Todos os Dados</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- PREVIEW -->
+<div class="preview-panel" id="previewPanel">
+  <div class="preview-pages" id="previewPages"></div>
+</div>
+
+</div>
+
+<!-- ===== REPORT MODAL ===== -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <h2 id="reportModalTitle">Nova Reportagem</h2>
+    <input type="hidden" id="reportEditId">
+    <div class="form-group"><label>Título da reportagem</label><input type="text" id="repTitle" placeholder="Título"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Data</label><input type="date" id="repDate"></div>
+      <div class="form-group"><label>Local</label><input type="text" id="repLocation" placeholder="Cidade, País"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Categoria</label><select id="repCategory">
+        <option>Documentário</option><option>Evento</option><option>Retrato</option><option>Esporte</option>
+        <option>Natureza</option><option>Urbano</option><option>Guerra/Conflito</option><option>Cultural</option><option>Outro</option>
+      </select></div>
+      <div class="form-group"><label>Créditos</label><input type="text" id="repCredits" placeholder="Fotos por..."></div>
+    </div>
+    <div class="form-group"><label>Contexto jornalístico</label><textarea id="repContext" rows="2" placeholder="Contexto da reportagem..."></textarea></div>
+    <div class="form-group"><label>Foto de abertura (capa da reportagem)</label><input type="file" accept="image/*" id="repMainPhoto" onchange="previewRepMain(event)"></div>
+    <div id="repMainPreview" style="max-height:80px;overflow:hidden;border-radius:3px;margin-bottom:.5rem;display:none;"><img src="" style="width:100%;object-fit:cover;"></div>
+
+    <h3 style="font-family:var(--font-heading);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--black);margin:.8rem 0 .3rem;border-bottom:1px solid var(--gray-200);padding-bottom:.3rem;">Galeria de Fotos</h3>
+    <div class="form-group"><label>Adicionar fotos</label><input type="file" accept="image/*" id="galleryInput" multiple onchange="handleGalleryUpload(event)"></div>
+    <div class="gallery-thumbs" id="galleryThumbs"></div>
+
+    <div class="modal-actions">
+      <button onclick="closeReportModal()">Cancelar</button>
+      <button class="btn-gold" onclick="saveReport()" style="padding:.45rem 1rem;border-radius:3px;font-size:.72rem;font-weight:600;">Salvar Reportagem</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PHOTO CAPTION MODAL ===== -->
+<div class="modal-overlay" id="captionModal">
+  <div class="modal" style="max-width:420px;">
+    <h2>Detalhes da Foto</h2>
+    <input type="hidden" id="capPhotoId">
+    <input type="hidden" id="capReportId">
+    <div class="form-group"><label>Legenda / Título</label><textarea id="capCaption" rows="2" placeholder="Legenda da foto..."></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>Local</label><input type="text" id="capLocation" placeholder="Local"></div>
+      <div class="form-group"><label>Data</label><input type="date" id="capDate"></div>
+    </div>
+    <div class="form-group"><label>Crédito</label><input type="text" id="capCredit" placeholder="Foto por..."></div>
+    <div class="form-group"><label>Layout na página</label><select id="capLayout">
+      <option value="half">1/2 coluna</option>
+      <option value="full">Largura total</option>
+      <option value="tall">Vertical (2x altura)</option>
+      <option value="large">Grande (2x2)</option>
+    </select></div>
+    <div class="modal-actions">
+      <button onclick="closeCaptionModal()">Cancelar</button>
+      <button class="btn-gold" onclick="saveCaption()" style="padding:.45rem 1rem;border-radius:3px;font-size:.72rem;font-weight:600;">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== DATA MODEL ====================
+const KEY = 'phj_portfolio';
+
+const DEFAULTS = {
+  profile: {
+    name:'Seu Nome', title:'Repórter Fotográfico', phone:'', email:'',
+    city:'', linkedin:'', bio:'', photo:'', coverPhoto:''
+  },
+  reports: [],
+  equipment: [],
+  skills: [],
+  publications: [],
+  settings: { darkMode:false, watermark:false, watermarkText:'FOTOJORNALISTA', coverTemplate:'1', signature:'', skillsDesc:'Áreas de atuação e especialidades' }
+};
+
+let data = JSON.parse(JSON.stringify(DEFAULTS));
+let tempGallery = []; // [{id,src,caption,location,date,credit,layout}]
+let repIdCounter = 0;
+
+// ==================== INIT ====================
+function init(){
+  const saved = localStorage.getItem(KEY);
+  if(saved){
+    try{
+      const p = JSON.parse(saved);
+      data = deepMerge(JSON.parse(JSON.stringify(DEFAULTS)), p);
+    }catch(e){ loadSample(); }
+  } else { loadSample(); }
+  applyTheme();
+  renderEditor();
+  renderPreview();
+}
+
+function deepMerge(base, ext){
+  const r = {...base};
+  Object.keys(ext).forEach(k => {
+    if(typeof base[k] === 'object' && base[k] !== null && !Array.isArray(base[k])){
+      r[k] = deepMerge(base[k], ext[k]);
+    } else {
+      r[k] = ext[k];
+    }
+  });
+  return r;
+}
+
+function loadSample(){
+  data.profile = {
+    name:'Ana Beatriz Pereira', title:'Repórter Fotográfica | Fotojornalista',
+    phone:'(11) 98765-4321', email:'ana.pereira@email.com',
+    city:'São Paulo, SP', linkedin:'linkedin.com/in/anapereira',
+    bio:'Fotojornalista com mais de 12 anos de experiência cobrindo conflitos urbanos, manifestações sociais, documentários autorais e pautas culturais. Passagem por redações como Folha de S.Paulo, UOL e Agência Bloomberg. Vencedora do Prêmio Internacional de Fotografia de Imprensa 2023 na categoria Documentário. Mestre em Comunicação pela USP.',
+    photo:'', coverPhoto:''
+  };
+  data.reports = [
+    {
+      id:'r1', title:'A Resistência do Sertão', date:'2024-03-15',
+      location:'Petrolina, PE', category:'Documentário',
+      context:'Série documental que retrata o cotidiano das comunidades ribeirinhas do Rio São Francisco. Imagens que revelam a resiliência de um povo que luta pela preservação de suas tradições e do seu território frente aos desafios da seca e do avanço do agronegócio.',
+      credits:'Fotos: Ana B. Pereira', mainPhoto:'',
+      photos:[
+        {id:'g1',src:'',caption:'Pescador no Rio São Francisco ao amanhecer',location:'Petrolina, PE',date:'2024-03-10',credit:'Ana B. Pereira',layout:'large'},
+        {id:'g2',src:'',caption:'Crianças brincando nas margens do rio',location:'Petrolina, PE',date:'2024-03-11',credit:'Ana B. Pereira',layout:'half'},
+        {id:'g3',src:'',caption:'Mulheres da comunidade preparando a colheita',location:'Petrolina, PE',date:'2024-03-12',credit:'Ana B. Pereira',layout:'half'},
+        {id:'g4',src:'',caption:'Vista aérea da comunidade ribeirinha',location:'Petrolina, PE',date:'2024-03-13',credit:'Ana B. Pereira',layout:'full'},
+      ]
+    },
+    {
+      id:'r2', title:'Vozes nas Ruas', date:'2024-01-20',
+      location:'São Paulo, SP', category:'Evento',
+      context:'Cobertura das manifestações pelos direitos climáticos que reuniram mais de 50 mil pessoas na Avenida Paulista. Um registro da força do ativismo jovem e da luta por justiça ambiental no Brasil.',
+      credits:'Fotos: Ana B. Pereira', mainPhoto:'',
+      photos:[
+        {id:'g5',src:'',caption:'Multidão na Avenida Paulista',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'full'},
+        {id:'g6',src:'',caption:'Cartazes e bandeiras do movimento',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'half'},
+        {id:'g7',src:'',caption:'Líder jovem discursando',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'tall'},
+        {id:'g8',src:'',caption:'Policiamento e organização do evento',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'half'},
+        {id:'g9',src:'',caption:'Pôr do sol sobre a manifestação',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'large'},
+      ]
+    }
+  ];
+  data.equipment = [
+    {id:'e1',name:'Sony A7R V',type:'camera'},
+    {id:'e2',name:'Canon EOS R3',type:'camera'},
+    {id:'e3',name:'24-70mm f/2.8 GM II',type:'lens'},
+    {id:'e4',name:'70-200mm f/2.8 GM II',type:'lens'},
+    {id:'e5',name:'16-35mm f/2.8 GM',type:'lens'},
+    {id:'e6',name:'DJI Mavic 3 Pro',type:'drone'},
+    {id:'e7',name:'iPhone 15 Pro Max',type:'smartphone'},
+    {id:'e8',name:'GoPro Hero 12',type:'extra'},
+    {id:'e9',name:'Microfone Rode NTG5',type:'extra'},
+  ];
+  data.skills = [
+    {id:'sk1',name:'Fotojornalismo'},
+    {id:'sk2',name:'Cobertura de Eventos'},
+    {id:'sk3',name:'Edição (Lightroom/Photoshop)'},
+    {id:'sk4',name:'Produção Visual'},
+    {id:'sk5',name:'Reportagem Documental'},
+    {id:'sk6',name:'Direção de Fotografia'},
+    {id:'sk7',name:'Ética Jornalística'},
+    {id:'sk8',name:'Pautas Investigativas'},
+  ];
+  data.publications = [
+    {id:'p1',name:'Folha de S.Paulo',link:'https://folha.uol.com.br',date:'2024-01-10',description:'Série de reportagens fotográficas sobre ocupações urbanas na região metropolitana de SP.'},
+    {id:'p2',name:'National Geographic Brasil',link:'https://nationalgeographic.com',date:'2023-08-05',description:'Ensaio documental "O Sertão e suas Vozes" — 12 páginas sobre comunidades ribeirinhas.'},
+    {id:'p3',name:'The Guardian',link:'https://theguardian.com',date:'2023-11-20',description:'Cobertura internacional das manifestações climáticas no Brasil.'},
+  ];
+  repIdCounter = 10;
+}
+
+// ==================== SKILLS DESCRIPTION ====================
+function syncSkillsDesc(){
+  data.settings.skillsDesc = document.getElementById('skDesc').value || 'Áreas de atuação e especialidades';
+  save();
+  renderPreview();
+}
+
+// ==================== THEME ====================
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', data.settings.darkMode ? 'dark' : 'light');
+  document.getElementById('darkBtn').textContent = data.settings.darkMode ? 'Claro' : 'Escuro';
+}
+
+function toggleDark(){
+  data.settings.darkMode = !data.settings.darkMode;
+  applyTheme(); save(); renderPreview();
+}
+
+// ==================== PERSISTENCE ====================
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+}
+
+function sync(){
+  gather();
+  save();
+  renderPreview();
+}
+
+function gather(){
+  const p = data.profile;
+  p.name = document.getElementById('f_name').value || 'Seu Nome';
+  p.title = document.getElementById('f_title').value || 'Repórter Fotográfico';
+  p.phone = document.getElementById('f_phone').value;
+  p.email = document.getElementById('f_email').value;
+  p.city = document.getElementById('f_city').value;
+  p.linkedin = document.getElementById('f_linkedin').value;
+  p.bio = document.getElementById('f_bio').value;
+
+  const s = data.settings;
+  s.watermark = document.getElementById('chkWatermark').checked;
+  s.watermarkText = document.getElementById('wmText').value || 'FOTOJORNALISTA';
+  s.coverTemplate = document.getElementById('coverTmpl').value;
+  document.getElementById('wmTextGroup').style.display = s.watermark ? 'block' : 'none';
+}
+
+// ==================== PROFILE PHOTOS ====================
+function handleProfilePhoto(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    data.profile.photo = ev.target.result;
+    document.getElementById('profPhotoImg').src = ev.target.result;
+    document.getElementById('profPhotoImg').style.display = 'block';
+    document.getElementById('profPhotoPlaceholder').style.display = 'none';
+    save(); renderPreview();
+  };
+  r.readAsDataURL(f);
+}
+
+function handleCoverPhoto(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    data.profile.coverPhoto = ev.target.result;
+    document.getElementById('coverPhotoPreview').querySelector('img').src = ev.target.result;
+    document.getElementById('coverPhotoPreview').style.display = 'block';
+    save(); renderPreview();
+  };
+  r.readAsDataURL(f);
+}
+
+// ==================== SETTINGS ====================
+document.getElementById('chkWatermark').addEventListener('change', function(){
+  document.getElementById('wmTextGroup').style.display = this.checked ? 'block' : 'none';
+  sync();
+});
+
+function handleSig(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    data.settings.signature = ev.target.result;
+    document.getElementById('sigPreview').style.display = 'block';
+    document.getElementById('sigPreview').querySelector('img').src = ev.target.result;
+    save(); renderPreview();
+  };
+  r.readAsDataURL(f);
+}
+function clearSig(){
+  data.settings.signature = '';
+  document.getElementById('sigPreview').style.display = 'none';
+  save(); renderPreview();
+}
+function clearAll(){
+  if(!confirm('Todos os dados serão perdidos. Continuar?')) return;
+  localStorage.removeItem(KEY);
+  data = JSON.parse(JSON.stringify(DEFAULTS));
+  renderEditor(); renderPreview();
+  toast('Dados limpos.');
+}
+
+// ==================== TABS ====================
+document.querySelectorAll('.editor-tab').forEach(tab => {
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.editor-section').forEach(s => s.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('sec-' + this.dataset.tab).classList.add('active');
+  });
+});
+
+// ==================== RENDER EDITOR ====================
+function renderEditor(){
+  const p = data.profile;
+  document.getElementById('f_name').value = p.name || '';
+  document.getElementById('f_title').value = p.title || '';
+  document.getElementById('f_phone').value = p.phone || '';
+  document.getElementById('f_email').value = p.email || '';
+  document.getElementById('f_city').value = p.city || '';
+  document.getElementById('f_linkedin').value = p.linkedin || '';
+  document.getElementById('f_bio').value = p.bio || '';
+  if(p.photo){
+    document.getElementById('profPhotoImg').src = p.photo;
+    document.getElementById('profPhotoImg').style.display = 'block';
+    document.getElementById('profPhotoPlaceholder').style.display = 'none';
+  }
+  if(p.coverPhoto){
+    document.getElementById('coverPhotoPreview').querySelector('img').src = p.coverPhoto;
+    document.getElementById('coverPhotoPreview').style.display = 'block';
+  }
+  document.getElementById('chkWatermark').checked = data.settings.watermark;
+  document.getElementById('wmText').value = data.settings.watermarkText || 'FOTOJORNALISTA';
+  document.getElementById('coverTmpl').value = data.settings.coverTemplate || '1';
+  document.getElementById('wmTextGroup').style.display = data.settings.watermark ? 'block' : 'none';
+  if(data.settings.signature){
+    document.getElementById('sigPreview').style.display = 'block';
+    document.getElementById('sigPreview').querySelector('img').src = data.settings.signature;
+  }
+
+  document.getElementById('skDesc').value = data.settings.skillsDesc || 'Áreas de atuação e especialidades';
+
+  renderReportsList();
+  renderEquipmentList();
+  renderSkillsList();
+  renderPublicationsList();
+}
+
+// ==================== REPORTS ====================
+function renderReportsList(){
+  const c = document.getElementById('reportsList');
+  if(!data.reports.length){
+    c.innerHTML = '<div class="empty-state"><p>Nenhuma reportagem</p><p>Clique em "Nova Reportagem"</p></div>';
+    return;
+  }
+  c.innerHTML = data.reports.map(r => `
+    <div class="report-card" onclick="openReportModal('${r.id}')">
+      <h4>${esc(r.title||'Sem título')}</h4>
+      <div class="meta">${r.date||''} ${r.location?'— '+esc(r.location):''} ${r.category?'• '+esc(r.category):''} · ${(r.photos||[]).length} fotos</div>
+      <div class="actions" onclick="event.stopPropagation()">
+        <button onclick="duplicateReport('${r.id}')">Duplicar</button>
+        <button onclick="if(confirm('Remover esta reportagem?'))deleteReport('${r.id}')">Remover</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function duplicateReport(id){
+  const idx = data.reports.findIndex(r => r.id === id);
+  if(idx<0) return;
+  const copy = JSON.parse(JSON.stringify(data.reports[idx]));
+  copy.id = 'r' + (++repIdCounter);
+  copy.title = copy.title + ' (cópia)';
+  data.reports.splice(idx + 1, 0, copy);
+  save(); renderReportsList(); renderPreview();
+  toast('Reportagem duplicada!');
+}
+
+let tempReportId = null;
+
+function openReportModal(id){
+  tempReportId = null;
+  document.getElementById('reportModalTitle').textContent = id ? 'Editar Reportagem' : 'Nova Reportagem';
+  document.getElementById('reportEditId').value = id || '';
+  document.getElementById('repTitle').value = '';
+  document.getElementById('repDate').value = '';
+  document.getElementById('repLocation').value = '';
+  document.getElementById('repCategory').value = 'Documentário';
+  document.getElementById('repCredits').value = '';
+  document.getElementById('repContext').value = '';
+  document.getElementById('repMainPreview').style.display = 'none';
+  document.getElementById('repMainPhoto').value = '';
+  tempGallery = [];
+
+  if(id){
+    const r = data.reports.find(x => x.id === id);
+    if(r){
+      document.getElementById('repTitle').value = r.title || '';
+      document.getElementById('repDate').value = r.date || '';
+      document.getElementById('repLocation').value = r.location || '';
+      document.getElementById('repCategory').value = r.category || 'Documentário';
+      document.getElementById('repCredits').value = r.credits || '';
+      document.getElementById('repContext').value = r.context || '';
+      if(r.mainPhoto){
+        document.getElementById('repMainPreview').querySelector('img').src = r.mainPhoto;
+        document.getElementById('repMainPreview').style.display = 'block';
+      }
+      tempGallery = (r.photos||[]).map(p => ({...p}));
+    }
+  }
+  renderGalleryThumbs();
+  document.getElementById('reportModal').classList.add('open');
+}
+
+function closeReportModal(){
+  document.getElementById('reportModal').classList.remove('open');
+}
+
+function previewRepMain(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    document.getElementById('repMainPreview').querySelector('img').src = ev.target.result;
+    document.getElementById('repMainPreview').style.display = 'block';
+  };
+  r.readAsDataURL(f);
+}
+
+function handleGalleryUpload(e){
+  const files = e.target.files;
+  for(let f of files){
+    const r = new FileReader();
+    r.onload = ev => {
+      tempGallery.push({
+        id:'g'+Date.now()+Math.random().toString(36).slice(2,6),
+        src:ev.target.result,
+        caption:'',
+        location:'',
+        date:'',
+        credit:'',
+        layout:'half'
+      });
+      renderGalleryThumbs();
+    };
+    r.readAsDataURL(f);
+  }
+  e.target.value = '';
+}
+
+function renderGalleryThumbs(){
+  const c = document.getElementById('galleryThumbs');
+  if(!tempGallery.length){
+    c.innerHTML = '<div style="font-size:.6rem;color:var(--gray-400);padding:.3rem 0;">Nenhuma foto na galeria.</div>';
+    return;
+  }
+  const layoutLabels = {half:'1/2',full:'Larg.',tall:'Vert.2x',large:'2x2'};
+  c.innerHTML = tempGallery.map((p,i) => `
+    <div class="gthumb" data-idx="${i}">
+      <img src="${p.src}">
+      <button class="gthumb-remove" onclick="removeGalleryPhoto(${i})">×</button>
+      <div class="gthumb-caption" onclick="openCaptionModal(${i})">${p.caption||'Add legenda'}</div>
+      <select class="photo-size-select" onchange="changePhotoLayout(${i},this.value)" onclick="event.stopPropagation()">
+        <option value="half" ${p.layout==='half'?'selected':''}>1/2 col</option>
+        <option value="full" ${p.layout==='full'?'selected':''}>Larg. total</option>
+        <option value="tall" ${p.layout==='tall'?'selected':''}>Vertical 2x</option>
+        <option value="large" ${p.layout==='large'?'selected':''}>Grande 2x2</option>
+      </select>
+    </div>
+  `).join('');
+
+  if(window.gSort) window.gSort.destroy();
+  const el = document.getElementById('galleryThumbs');
+  if(el){
+    try{
+      window.gSort = Sortable.create(el, {
+        animation:150,
+        handle:'.gthumb',
+        onEnd: function(evt){
+          const item = tempGallery.splice(evt.oldIndex, 1)[0];
+          tempGallery.splice(evt.newIndex, 0, item);
+          renderGalleryThumbs();
+        }
+      });
+    }catch(e){}
+  }
+}
+
+function changePhotoLayout(idx, val){
+  if(tempGallery[idx]) tempGallery[idx].layout = val;
+}
+
+function removeGalleryPhoto(idx){
+  tempGallery.splice(idx, 1);
+  renderGalleryThumbs();
+}
+
+function openCaptionModal(idx){
+  const p = tempGallery[idx]; if(!p) return;
+  document.getElementById('capPhotoId').value = p.id;
+  document.getElementById('capCaption').value = p.caption||'';
+  document.getElementById('capLocation').value = p.location||'';
+  document.getElementById('capDate').value = p.date||'';
+  document.getElementById('capCredit').value = p.credit||'';
+  document.getElementById('capLayout').value = p.layout||'half';
+  document.getElementById('captionModal').classList.add('open');
+}
+
+function closeCaptionModal(){
+  document.getElementById('captionModal').classList.remove('open');
+}
+
+function saveCaption(){
+  const id = document.getElementById('capPhotoId').value;
+  const idx = tempGallery.findIndex(p => p.id === id);
+  if(idx>=0){
+    tempGallery[idx].caption = document.getElementById('capCaption').value;
+    tempGallery[idx].location = document.getElementById('capLocation').value;
+    tempGallery[idx].date = document.getElementById('capDate').value;
+    tempGallery[idx].credit = document.getElementById('capCredit').value;
+    tempGallery[idx].layout = document.getElementById('capLayout').value;
+    renderGalleryThumbs();
+  }
+  closeCaptionModal();
+}
+
+function saveReport(){
+  const editId = document.getElementById('reportEditId').value;
+  const title = document.getElementById('repTitle').value;
+  const date = document.getElementById('repDate').value;
+  const location = document.getElementById('repLocation').value;
+  const category = document.getElementById('repCategory').value;
+  const credits = document.getElementById('repCredits').value;
+  const context = document.getElementById('repContext').value;
+  let mainPhoto = '';
+  const mp = document.getElementById('repMainPreview');
+  if(mp.style.display!=='none' && mp.querySelector('img').src) mainPhoto = mp.querySelector('img').src;
+  const photos = tempGallery.map(p => ({
+    id:p.id, src:p.src, caption:p.caption||'', location:p.location||'',
+    date:p.date||'', credit:p.credit||'', layout:p.layout||'half'
+  }));
+
+  if(editId){
+    const idx = data.reports.findIndex(r => r.id === editId);
+    if(idx>=0){
+      data.reports[idx] = {...data.reports[idx], title, date, location, category, credits, context, mainPhoto, photos};
+    }
+  } else {
+    data.reports.push({
+      id: 'r'+(++repIdCounter), title, date, location, category, credits, context, mainPhoto, photos
+    });
+  }
+  save(); renderReportsList(); renderPreview();
+  closeReportModal();
+  toast(editId ? 'Reportagem atualizada!' : 'Reportagem adicionada!');
+}
+
+function deleteReport(id){
+  data.reports = data.reports.filter(r => r.id !== id);
+  save(); renderReportsList(); renderPreview();
+  toast('Reportagem removida.');
+}
+
+// ==================== EQUIPMENT ====================
+function renderEquipmentList(){
+  const c = document.getElementById('equipmentList');
+  if(!data.equipment.length){
+    c.innerHTML = '<div style="font-size:.65rem;color:var(--gray-400);">Nenhum equipamento.</div>';
+    return;
+  }
+  c.innerHTML = data.equipment.map(e =>
+    `<span class="eq-item">${esc(e.name)} <span class="type-badge">${e.type}</span> <button onclick="removeEq('${e.id}')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:.6rem;margin-left:.15rem;">×</button></span>`
+  ).join('');
+}
+
+function addEq(){
+  const name = document.getElementById('eqName').value.trim();
+  const type = document.getElementById('eqType').value;
+  if(!name) return;
+  data.equipment.push({id:'eq'+Date.now(), name, type});
+  document.getElementById('eqName').value = '';
+  save(); renderEquipmentList(); renderPreview();
+}
+function removeEq(id){
+  data.equipment = data.equipment.filter(e => e.id !== id);
+  save(); renderEquipmentList(); renderPreview();
+}
+
+// ==================== SKILLS ====================
+function renderSkillsList(){
+  const c = document.getElementById('skillsList');
+  if(!data.skills.length){
+    c.innerHTML = '<div style="grid-column:1/-1;font-size:.7rem;color:var(--gray-400);text-align:center;padding:1rem 0;">Nenhuma competência cadastrada.</div>';
+    return;
+  }
+  c.innerHTML = data.skills.map(s =>
+    `<div style="border:1px solid var(--gray-200);border-radius:3px;padding:.3rem .4rem;display:flex;align-items:center;gap:.35rem;background:var(--gray-50);">
+      <span style="font-size:.65rem;color:var(--gold);flex-shrink:0;">●</span>
+      <span style="font-size:.7rem;color:var(--gray-700);font-weight:500;flex:1;min-width:0;">${esc(s.name)}</span>
+      <button onclick="removeSk('${s.id}')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:.65rem;flex-shrink:0;padding:.1rem;">×</button>
+    </div>`
+  ).join('');
+}
+function addSk(){
+  const name = document.getElementById('skName').value.trim();
+  if(!name) return;
+  data.skills.push({id:'sk'+Date.now(), name});
+  document.getElementById('skName').value = '';
+  save(); renderSkillsList(); renderPreview();
+}
+function removeSk(id){
+  data.skills = data.skills.filter(s => s.id !== id);
+  save(); renderSkillsList(); renderPreview();
+}
+
+// ==================== PUBLICATIONS ====================
+function renderPublicationsList(){
+  const c = document.getElementById('publicationsList');
+  if(!data.publications.length){
+    c.innerHTML = '<div class="empty-state"><p>Nenhuma publicação.</p></div>';
+    return;
+  }
+  c.innerHTML = data.publications.map(p =>
+    `<div class="pub-item"><div><h5>${esc(p.name)}</h5><span>${p.date||''} ${p.link?'— '+esc(p.link):''}</span><br><span style="font-size:.6rem;">${esc(p.description||'')}</span></div><button onclick="removePub('${p.id}')">×</button></div>`
+  ).join('');
+}
+function addPub(){
+  const name = document.getElementById('pubName').value.trim();
+  const link = document.getElementById('pubLink').value.trim();
+  const date = document.getElementById('pubDate').value;
+  const desc = document.getElementById('pubDesc').value.trim();
+  if(!name) return;
+  data.publications.push({id:'pub'+Date.now(), name, link, date, description:desc});
+  document.getElementById('pubName').value=''; document.getElementById('pubLink').value='';
+  document.getElementById('pubDate').value=''; document.getElementById('pubDesc').value='';
+  save(); renderPublicationsList(); renderPreview();
+  toast('Publicação adicionada!');
+}
+function removePub(id){
+  data.publications = data.publications.filter(p => p.id !== id);
+  save(); renderPublicationsList(); renderPreview();
+}
+
+// ==================== PREVIEW RENDER ====================
+function renderPreview(){
+  gather();
+  const pages = buildPages();
+  document.getElementById('previewPages').innerHTML = addWatermarks(pages.join('\n'));
+}
+
+function buildPages(){
+  const pgs = [];
+  let pn = 0;
+  pgs.push(makeCover(++pn));
+  pgs.push(makeTOC(++pn));
+  pgs.push(makeAbout(++pn));
+  data.reports.forEach(r => {
+    pgs.push(makeReportOpen(r, ++pn));
+    const chunks = chunkPhotos((r.photos||[]));
+    chunks.forEach((ch, ci) => pgs.push(makeReportPage(r, ch, ci === 0, ++pn)));
+  });
+  pgs.push(makeEquipmentPage(++pn));
+  pgs.push(makeSkillsPage(++pn));
+  pgs.push(makePublicationsPage(++pn));
+  pgs.push(makeFinalPage(++pn));
+  return pgs;
+}
+
+function makeCover(pn){
+  const p = data.profile;
+  const tmpl = data.settings.coverTemplate||'1';
+  const coverSrc = p.coverPhoto || p.photo;
+  const bgImg = coverSrc ? `<img src="${coverSrc}" alt="">` : '';
+
+  let inner = '';
+  if(tmpl === '1'){
+    inner = `
+      <div class="cover">
+        <div class="cover-bg">${bgImg || '<div style="width:100%;height:100%;background:var(--black)"></div>'}</div>
+        <div class="cover-overlay"></div>
+        <div class="cover-content">
+          <div class="cover-tag">Portfólio Profissional</div>
+          <h1>PORTFÓLIO<br><span class="gold">REPÓRTER</span><br>FOTOGRÁFICO</h1>
+          <div class="cover-name">${esc(p.name)}</div>
+          <div class="cover-contact">
+            ${p.phone ? `<span>${esc(p.phone)}</span>` : ''}
+            ${p.email ? `<span>${esc(p.email)}</span>` : ''}
+            ${p.city ? `<span>${esc(p.city)}</span>` : ''}
+            ${p.linkedin ? `<span>${esc(p.linkedin)}</span>` : ''}
+          </div>
+        </div>
+        <div class="page-number">${pn}</div>
+      </div>`;
+  } else if(tmpl === '2'){
+    inner = `
+      <div class="cover" style="display:grid;grid-template-columns:1fr 1fr;">
+        <div style="overflow:hidden;background:var(--black);display:flex;flex-direction:column;justify-content:center;padding:1.5rem;">
+          <div class="cover-tag" style="margin-bottom:.2rem;">Portfólio Profissional</div>
+          <h1 style="font-size:2.2rem;line-height:.9;color:var(--white);">PORTFÓLIO<br><span class="gold">REPÓRTER</span><br>FOTOGRÁFICO</h1>
+          <div class="cover-name" style="font-size:.7rem;margin-top:.5rem;color:rgba(255,255,255,.7);">${esc(p.name)}</div>
+          <div class="cover-contact" style="margin-top:.3rem;">
+            ${p.phone ? `<span>${esc(p.phone)}</span>` : ''}
+            ${p.email ? `<span>${esc(p.email)}</span>` : ''}
+          </div>
+        </div>
+        <div style="overflow:hidden;">
+          ${coverSrc ? `<img src="${coverSrc}" style="width:100%;height:100%;object-fit:cover;">` : '<div style="width:100%;height:100%;background:var(--black-3);display:flex;align-items:center;justify-content:center;color:var(--gray-500);font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;">Imagem</div>'}
+        </div>
+        <div class="page-number">${pn}</div>
+      </div>`;
+  } else {
+    inner = `
+      <div class="cover">
+        <div class="cover-bg">${bgImg || '<div style="width:100%;height:100%;background:var(--black)"></div>'}</div>
+        <div class="cover-overlay" style="background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8) 100%);"></div>
+        <div class="cover-content" style="justify-content:center;align-items:center;text-align:center;">
+          ${p.photo ? `<img src="${p.photo}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);margin-bottom:.6rem;">` : ''}
+          <div class="cover-tag" style="margin-bottom:.2rem;">Portfólio Profissional</div>
+          <h1 style="font-size:2rem;line-height:.95;">${esc(p.name).split(' ')[0]}<br><span class="gold">${esc(p.name).split(' ').slice(1).join(' ') || 'FOTOGRÁFICO'}</span></h1>
+          <div class="cover-name" style="font-size:.65rem;color:rgba(255,255,255,.6);">${esc(p.title)}</div>
+          <div class="cover-contact" style="justify-content:center;margin-top:.4rem;">
+            ${p.phone ? `<span>${esc(p.phone)}</span>` : ''}
+            ${p.email ? `<span>${esc(p.email)}</span>` : ''}
+            ${p.city ? `<span>${esc(p.city)}</span>` : ''}
+          </div>
+        </div>
+        <div class="page-number">${pn}</div>
+      </div>`;
+  }
+  return `<div class="page"><div class="page-inner">${inner}</div></div>`;
+}
+
+function makeTOC(pn){
+  let items = '';
+  let tp = 3; // starts at about page
+  items += `<li><span class="toc-num">01</span><span class="toc-title">Sobre Mim</span><span class="toc-page-num">${tp}</span></li>`;
+  data.reports.forEach((r,i) => {
+    tp++;
+    const num = String(i+2).padStart(2,'0');
+    items += `<li><span class="toc-num">${num}</span><span class="toc-title">${esc(r.title||'Reportagem')}</span><span class="toc-page-num">${tp}</span></li>`;
+    const extraPages = Math.max(0, Math.ceil((r.photos||[]).length / 4) - 1);
+    tp += extraPages;
+  });
+  const eqPage = tp + 1;
+  const skPage = eqPage + 1;
+  const pubPage = skPage + 1;
+  const finPage = pubPage + 1;
+  items += `<li><span class="toc-num">0${data.reports.length+2}</span><span class="toc-title">Equipamentos</span><span class="toc-page-num">${eqPage}</span></li>`;
+  items += `<li><span class="toc-num">0${data.reports.length+3}</span><span class="toc-title">Competências</span><span class="toc-page-num">${skPage}</span></li>`;
+  items += `<li><span class="toc-num">0${data.reports.length+4}</span><span class="toc-title">Publicações</span><span class="toc-page-num">${pubPage}</span></li>`;
+  items += `<li><span class="toc-num">0${data.reports.length+5}</span><span class="toc-title">Contato</span><span class="toc-page-num">${finPage}</span></li>`;
+
+  return `<div class="page"><div class="page-inner"><div class="toc"><h2>SUMÁRIO</h2><div class="toc-sub">Portfólio Profissional</div><div class="toc-line"></div><ul class="toc-list">${items}</ul><div class="page-number">${pn}</div></div></div></div>`;
+}
+
+function makeAbout(pn){
+  const p = data.profile;
+  const skills = data.skills.length ? data.skills.slice(0,8) : [];
+  const dots = ['●','●','●','●','●','●','●','●'];
+  const skDesc = data.settings.skillsDesc || 'Áreas de atuação e especialidades';
+
+  return `<div class="page"><div class="page-inner">
+    <div class="about">
+      <div class="about-left">
+        <h2>SOBRE MIM</h2>
+        <div class="about-sub">Repórter Fotográfico</div>
+        <div class="about-bio">${esc(p.bio || 'Sem biografia cadastrada.')}</div>
+      </div>
+      <div class="about-right">
+        ${p.photo ? `<img class="about-photo" src="${p.photo}">` : '<div style="height:50%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;">Foto</div>'}
+        <div class="about-cards">
+          ${skills.length ? skills.map((s,i) =>
+            `<div class="about-card"><div class="card-icon">${dots[i%dots.length]}</div><div class="card-label">${esc(s.name)}</div></div>`
+          ).join('') : '<div class="about-card" style="grid-column:1/-1;justify-content:center;align-items:center;"><div class="card-label" style="color:var(--gray-400);">Adicione competências</div></div>'}
+        </div>
+      </div>
+    </div>
+    <div class="page-number">${pn}</div>
+  </div></div>`;
+}
+
+function makeReportOpen(r, pn){
+  const bgSrc = r.mainPhoto || (r.photos&&r.photos[0]?r.photos[0].src:'');
+  return `<div class="page"><div class="page-inner"><div class="report-opening">
+    <div class="rop-bg">${bgSrc ? `<img src="${bgSrc}">` : '<div style="width:100%;height:100%;background:var(--black-3)"></div>'}</div>
+    <div class="rop-overlay"></div>
+    <div class="rop-content">
+      <div class="rop-category">${esc(r.category||'Reportagem')}</div>
+      <div class="rop-title">${esc(r.title||'Sem título')}</div>
+      <div class="rop-meta"><span>${r.date||''}</span><span>${esc(r.location||'')}</span></div>
+      ${r.context ? `<div class="rop-context">${esc(r.context)}</div>` : ''}
+      ${r.credits ? `<div class="rop-credits">${esc(r.credits)}</div>` : ''}
+    </div>
+    <div class="page-number" style="color:rgba(255,255,255,.4);">${pn}</div>
+  </div></div></div>`;
+}
+
+function chunkPhotos(photos){
+  if(!photos.length) return [];
+  const chunks = [];
+  for(let i=0; i<photos.length; i+=4){
+    chunks.push(photos.slice(i, i+4));
+  }
+  return chunks;
+}
+
+function makeReportPage(r, photos, isFirst, pn){
+  if(!photos.length) return '';
+  const gridClass = 'layout-mixed';
+  const useContext = isFirst && r.context;
+
+  let cells = '';
+  photos.forEach(p => {
+    let cls = 'photo-cell';
+    const lay = p.layout || 'half';
+    if(lay === 'full') cls += ' full-w';
+    else if(lay === 'tall') cls += ' tall span-2';
+    else if(lay === 'large') cls += ' span-2 span-row-2';
+    const imgStyle = lay === 'tall' ? 'object-fit:cover;' : 'object-fit:cover;';
+    const cap = p.caption ? esc(p.caption) : '';
+    const loc = p.location ? esc(p.location) : '';
+    const dt = p.date || '';
+    cells += `<div class="${cls}">
+      ${p.src ? `<img src="${p.src}" style="${imgStyle}width:100%;height:100%;">` : '<div style="width:100%;height:100%;background:var(--gray-100);display:flex;align-items:center;justify-content:center;color:var(--gray-300);font-size:.6rem;">Sem foto</div>'}
+      <div class="photo-info"><div class="pi-caption">${cap||'Sem legenda'}</div><div class="pi-meta">${loc ? loc+' · ':''}${dt ? dt:''} ${p.credit?'· '+esc(p.credit):''}</div></div>
+    </div>`;
+  });
+
+  const contextHtml = useContext ? `
+    <div class="context-block"><h4>Contexto Jornalístico</h4><p>${esc(r.context||'')}</p></div>
+  ` : '';
+
+  const titleHtml = isFirst ? `<div class="rpage-header"><h3>${esc(r.title)}</h3></div>` : '';
+
+  return `<div class="page"><div class="page-inner"><div class="rpage">
+    ${titleHtml}
+    <div class="rpage-grid ${gridClass}" style="${photos.length <= 2 ? 'grid-template-columns:1fr 1fr' : ''}">${cells}</div>
+    ${contextHtml}
+    <div class="page-number">${pn}</div>
+  </div></div></div>`;
+}
+
+function makeEquipmentPage(pn){
+  const p = data.profile;
+  const eqImg = p.photo || '';
+  const types = {camera:'Câmeras', lens:'Lentes', drone:'Drones', smartphone:'Smartphones', extra:'Acessórios'};
+  let groups = '';
+  Object.keys(types).forEach(key => {
+    const items = data.equipment.filter(e => e.type === key);
+    if(items.length){
+      groups += `<div class="eq-group"><h5>${types[key]}</h5><ul>${items.map(e => `<li>${esc(e.name)}</li>`).join('')}</ul></div>`;
+    }
+  });
+  if(!groups) groups = '<div style="font-size:.55rem;color:var(--gray-400)">Nenhum equipamento cadastrado.</div>';
+
+  return `<div class="page"><div class="page-inner"><div class="eq-page">
+    <div class="eq-left">${eqImg ? `<img src="${eqImg}">` : '<div style="width:100%;height:100%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;">Foto</div>'}</div>
+    <div class="eq-right"><h2>EQUIPAMENTOS</h2>${groups}</div>
+    <div class="page-number">${pn}</div>
+  </div></div></div>`;
+}
+
+function makeSkillsPage(pn){
+  const icons = ['J','C','E','P','R','D','A','L','V','M','F','I'];
+  const items = data.skills.length ? data.skills.map((s,i) =>
+    `<div class="skill-item"><span class="sk-icon">${icons[i%icons.length]}</span><span class="sk-name">${esc(s.name)}</span></div>`
+  ).join('') : '<div style="grid-column:1/-1;text-align:center;font-size:.6rem;color:var(--gray-400);padding:1rem;">Nenhuma competência cadastrada.</div>';
+
+  return `<div class="page"><div class="page-inner"><div class="skills-page"><h2>COMPETÊNCIAS</h2><div class="skills-grid">${items}</div><div class="page-number">${pn}</div></div></div></div>`;
+}
+
+function makePublicationsPage(pn){
+  const rows = data.publications.length ? data.publications.map(p =>
+    `<tr><td>${esc(p.name)}</td><td>${p.date||''}</td><td>${esc(p.description||'')}</td><td>${p.link ? `<a href="${p.link}" target="_blank">Acessar</a>` : ''}</td></tr>`
+  ).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:.5rem;">Nenhuma publicação</td></tr>';
+
+  return `<div class="page"><div class="page-inner"><div class="pubs-page"><h2>PUBLICAÇÕES</h2>
+    <table class="pubs-table"><thead><tr><th>Veículo</th><th>Data</th><th>Descrição</th><th>Link</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="page-number">${pn}</div>
+  </div></div></div>`;
+}
+
+function makeFinalPage(pn){
+  const p = data.profile;
+  const sig = data.settings.signature;
+  return `<div class="page"><div class="page-inner"><div class="final-page">
+    <div class="final-bg">◈</div>
+    <h2>CONTATO</h2>
+    <div class="final-line"></div>
+    <div class="final-name">${esc(p.name)}</div>
+    <div class="final-contact">
+      ${p.phone ? `<span>${esc(p.phone)}</span>` : ''}
+      ${p.email ? `<span>${esc(p.email)}</span>` : ''}
+      ${p.city ? `<span>${esc(p.city)}</span>` : ''}
+      ${p.linkedin ? `<span>${esc(p.linkedin)}</span>` : ''}
+    </div>
+    ${sig ? `<div class="final-sig"><img src="${sig}"><div class="sig-label">Assinatura Profissional</div></div>` : ''}
+    <div class="page-number">${pn}</div>
+  </div></div></div>`;
+}
+
+// ==================== WATERMARK ====================
+function addWatermarks(html){
+  if(!data.settings.watermark) return html;
+  const txt = data.settings.watermarkText || 'FOTOJORNALISTA';
+  const wm = `<div class="watermark">${esc(txt)}</div>`;
+  return html.replace(/(<div class="page-number[^>]*>)/g, wm + '$1');
+}
+
+// ==================== EXPORT ====================
+function exportPDF(){
+  toast('Gerando PDF...');
+  const pages = document.querySelectorAll('.page');
+  if(!pages.length){toast('Nada para exportar.');return;}
+  const {jsPDF} = window.jspdf;
+  const pdf = new jsPDF('p','mm','a4');
+  const pw = 210, ph = 297;
+  let chain = Promise.resolve();
+
+  pages.forEach((page, i) => {
+    chain = chain.then(() =>
+      html2canvas(page, {scale:2, useCORS:true, allowTaint:false, backgroundColor:'#FFFFFF', logging:false})
+      .then(canvas => {
+        const d = canvas.toDataURL('image/jpeg',0.95);
+        if(i > 0) pdf.addPage();
+        pdf.addImage(d,'JPEG',0,0,pw,ph,undefined,'FAST');
+      })
+    );
+  });
+
+  chain.then(() => {
+    pdf.save('portfolio_fotojornalismo.pdf');
+    toast('PDF exportado com sucesso!');
+  }).catch(e => {console.error(e);toast('Erro ao exportar PDF.');});
+}
+
+function exportHTML(){
+  const styleTags = document.querySelectorAll('style');
+  let styles = '';
+  styleTags.forEach(s => styles += s.innerHTML);
+  // override variables for print
+  const printStyles = `
+  body{background:#fff;padding:20px;display:flex;flex-direction:column;align-items:center;}
+  .page{width:210mm;min-height:297mm;box-shadow:none;margin-bottom:10mm;}
+  :root{--white:#fff;--black:#0D0D0D;--black-2:#1A1A1A;--black-3:#2A2A2A;
+    --gray-50:#FAFAFA;--gray-100:#F5F5F5;--gray-200:#E8E8E8;--gray-300:#D9D9D9;
+    --gray-400:#B0B0B0;--gray-500:#888888;--gray-600:#666666;--gray-700:#4A4A4A;
+    --gold:#D6A300;--gold-light:#FFC107;--gold-dark:#B38800;}
+  [data-theme]{--white:#fff;--black:#0D0D0D;--black-2:#1A1A1A;--black-3:#2A2A2A;
+    --gray-50:#FAFAFA;--gray-100:#F5F5F5;--gray-200:#E8E8E8;--gray-300:#D9D9D9;
+    --gray-400:#B0B0B0;--gray-500:#888888;--gray-600:#666666;--gray-700:#4A4A4A;
+    --gold:#D6A300;--gold-light:#FFC107;--gold-dark:#B38800;}
+  `;
+  const pagesHTML = document.querySelector('.preview-pages')?.innerHTML || '';
+  const full = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><title>Portfólio - ${esc(data.profile.name)}</title>
+<style>${styles}${printStyles}</style></head>
+<body>${pagesHTML}</body></html>`;
+  const blob = new Blob([full],{type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'portfolio_fotojornalismo.html';
+  a.click(); URL.revokeObjectURL(url);
+  toast('HTML exportado!');
+}
+
+function exportJSON(){
+  const j = JSON.stringify(data, null, 2);
+  const blob = new Blob([j],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'portfolio_fotojornalismo.json';
+  a.click(); URL.revokeObjectURL(url);
+  toast('JSON exportado!');
+}
+
+function importJSON(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try{
+      const imp = JSON.parse(ev.target.result);
+      data = deepMerge(JSON.parse(JSON.stringify(DEFAULTS)), imp);
+      // Fix counters
+      let maxId = 0;
+      data.reports.forEach(rp => {
+        const n = parseInt(rp.id.replace('r',''));
+        if(n > maxId) maxId = n;
+      });
+      repIdCounter = maxId + 1;
+      save(); renderEditor(); renderPreview();
+      toast('Dados importados!');
+    } catch(e){ toast('Erro ao importar JSON.'); }
+  };
+  r.readAsText(f);
+  e.target.value = '';
+}
+
+// ==================== UTILITIES ====================
+function esc(s){ if(!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ==================== INIT ====================
+init();
+</script>
+</body>
+</html>
