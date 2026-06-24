@@ -1186,6 +1186,7 @@ img{max-width:100%;display:block}
         <input type="file" id="skImage" accept="image/*" style="font-size:.7rem;width:100%;">
       </div>
       <div id="skillsList" style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;"></div>
+      <input type="file" id="skChangeImageInput" accept="image/*" style="display:none">
     </div>
 
     <!-- PUBLICATIONS -->
@@ -1801,6 +1802,8 @@ function removeEq(id){
 }
 
 // ==================== SKILLS ====================
+let pendingSkillImageId = null;
+
 function renderSkillsList(){
   const c = document.getElementById('skillsList');
   if(!data.skills.length){
@@ -1809,12 +1812,39 @@ function renderSkillsList(){
   }
   c.innerHTML = data.skills.map(s =>
     `<div style="border:1px solid var(--gray-200);border-radius:3px;padding:.3rem .4rem;display:flex;align-items:center;gap:.35rem;background:var(--gray-50);">
-      ${s.image ? `<img src="${s.image}" style="width:28px;height:28px;border-radius:3px;object-fit:cover;flex-shrink:0;">` : `<span style="font-size:.65rem;color:var(--gold);flex-shrink:0;">●</span>`}
+      ${s.image
+        ? `<img src="${s.image}" style="width:28px;height:28px;border-radius:3px;object-fit:cover;flex-shrink:0;cursor:pointer;" onclick="changeSkImage('${s.id}')" title="Trocar imagem">`
+        : `<span style="font-size:.65rem;color:var(--gold);flex-shrink:0;cursor:pointer;" onclick="changeSkImage('${s.id}')" title="Adicionar imagem">●</span>`}
       <span style="font-size:.7rem;color:var(--gray-700);font-weight:500;flex:1;min-width:0;">${esc(s.name)}</span>
+      ${s.image ? `<button onclick="removeSkImage('${s.id}')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:.6rem;flex-shrink:0;padding:.1rem;" title="Remover imagem">✕</button>` : ''}
       <button onclick="removeSk('${s.id}')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:.65rem;flex-shrink:0;padding:.1rem;">×</button>
     </div>`
   ).join('');
 }
+
+function changeSkImage(id){
+  pendingSkillImageId = id;
+  const input = document.getElementById('skChangeImageInput');
+  input.value = '';
+  input.click();
+}
+
+function removeSkImage(id){
+  const skill = data.skills.find(s => s.id === id);
+  if(skill){ skill.image = ''; save(); renderSkillsList(); renderPreview(); }
+}
+
+document.getElementById('skChangeImageInput').addEventListener('change', function(e){
+  const f = e.target.files[0];
+  if(!f || !pendingSkillImageId) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    const skill = data.skills.find(s => s.id === pendingSkillImageId);
+    if(skill){ skill.image = ev.target.result; save(); renderSkillsList(); renderPreview(); }
+    pendingSkillImageId = null;
+  };
+  r.readAsDataURL(f);
+});
 function addSk(){
   const name = document.getElementById('skName').value.trim();
   if(!name) return;
