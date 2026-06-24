@@ -828,6 +828,38 @@ img{max-width:100%;display:block}
 .skill-item .sk-icon{color:var(--gold);font-size:.65rem;width:18px;text-align:center}
 .skill-item .sk-name{font-size:.58rem;color:var(--gray-700);font-weight:500}
 
+/* Skill cards */
+.skill-card{
+  position:relative;
+  border-radius:3px;
+  overflow:hidden;
+  min-height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-size:cover;
+  background-position:center;
+  background:linear-gradient(135deg,var(--black-2),var(--black-3));
+}
+.skill-card-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.7) 100%);
+  z-index:0;
+}
+.skill-card-name{
+  position:relative;z-index:1;
+  font-family:var(--font-heading);
+  font-size:.78rem;
+  font-weight:600;
+  color:#fff;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  text-align:center;
+  text-shadow:0 1px 6px rgba(0,0,0,.6);
+  padding:.4rem .6rem;
+  line-height:1.25;
+}
+
 /* ===== PUBLICATIONS PAGE ===== */
 .pubs-page{padding:1.2rem;flex:1;display:flex;flex-direction:column;min-height:0}
 .pubs-page h2{
@@ -1145,9 +1177,13 @@ img{max-width:100%;display:block}
         <label>Descrição da seção</label>
         <input type="text" id="skDesc" placeholder="Ex: Áreas de atuação e especialidades" oninput="syncSkillsDesc()" style="font-size:.75rem;">
       </div>
-      <div style="display:flex;gap:.3rem;margin-bottom:.6rem;">
-        <input type="text" id="skName" placeholder="Ex: Fotojornalismo" style="flex:1;padding:.45rem .6rem;border:1px solid var(--gray-200);border-radius:3px;font-size:.75rem;" onkeydown="if(event.key==='Enter')addSk()">
-        <button class="btn btn-gold" onclick="addSk()" style="padding:.45rem .7rem;border:none;border-radius:3px;font-weight:600;white-space:nowrap;">Adicionar</button>
+      <div style="background:var(--gray-50);padding:.7rem;border-radius:var(--radius);border:1px solid var(--gray-200);margin-bottom:.6rem;">
+        <div style="display:flex;gap:.3rem;margin-bottom:.35rem;">
+          <input type="text" id="skName" placeholder="Ex: Fotojornalismo" style="flex:1;padding:.45rem .6rem;border:1px solid var(--gray-200);border-radius:3px;font-size:.75rem;" onkeydown="if(event.key==='Enter')addSk()">
+          <button class="btn btn-gold" onclick="addSk()" style="padding:.45rem .7rem;border:none;border-radius:3px;font-weight:600;white-space:nowrap;">Adicionar</button>
+        </div>
+        <label style="display:block;font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:var(--gray-500);margin-bottom:.2rem;">Imagem de fundo (opcional)</label>
+        <input type="file" id="skImage" accept="image/*" style="font-size:.7rem;width:100%;">
       </div>
       <div id="skillsList" style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;"></div>
     </div>
@@ -1773,7 +1809,7 @@ function renderSkillsList(){
   }
   c.innerHTML = data.skills.map(s =>
     `<div style="border:1px solid var(--gray-200);border-radius:3px;padding:.3rem .4rem;display:flex;align-items:center;gap:.35rem;background:var(--gray-50);">
-      <span style="font-size:.65rem;color:var(--gold);flex-shrink:0;">●</span>
+      ${s.image ? `<img src="${s.image}" style="width:28px;height:28px;border-radius:3px;object-fit:cover;flex-shrink:0;">` : `<span style="font-size:.65rem;color:var(--gold);flex-shrink:0;">●</span>`}
       <span style="font-size:.7rem;color:var(--gray-700);font-weight:500;flex:1;min-width:0;">${esc(s.name)}</span>
       <button onclick="removeSk('${s.id}')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:.65rem;flex-shrink:0;padding:.1rem;">×</button>
     </div>`
@@ -1782,9 +1818,22 @@ function renderSkillsList(){
 function addSk(){
   const name = document.getElementById('skName').value.trim();
   if(!name) return;
-  data.skills.push({id:'sk'+Date.now(), name});
-  document.getElementById('skName').value = '';
-  save(); renderSkillsList(); renderPreview();
+  const imgInput = document.getElementById('skImage');
+  const imgFile = imgInput && imgInput.files[0];
+  if(imgFile){
+    const r = new FileReader();
+    r.onload = ev => {
+      data.skills.push({id:'sk'+Date.now(), name, image: ev.target.result});
+      document.getElementById('skName').value = '';
+      if(imgInput) imgInput.value = '';
+      save(); renderSkillsList(); renderPreview();
+    };
+    r.readAsDataURL(imgFile);
+  } else {
+    data.skills.push({id:'sk'+Date.now(), name, image: ''});
+    document.getElementById('skName').value = '';
+    save(); renderSkillsList(); renderPreview();
+  }
 }
 function removeSk(id){
   data.skills = data.skills.filter(s => s.id !== id);
@@ -2039,10 +2088,12 @@ function makeEquipmentPage(pn){
 }
 
 function makeSkillsPage(pn){
-  const icons = ['J','C','E','P','R','D','A','L','V','M','F','I'];
-  const items = data.skills.length ? data.skills.map((s,i) =>
-    `<div class="skill-item"><span class="sk-icon">${icons[i%icons.length]}</span><span class="sk-name">${esc(s.name)}</span></div>`
-  ).join('') : '<div style="grid-column:1/-1;text-align:center;font-size:.6rem;color:var(--gray-400);padding:1rem;">Nenhuma competência cadastrada.</div>';
+  const items = data.skills.length ? data.skills.map(s => {
+    const style = s.image
+      ? `background-image:url(${s.image});background-size:cover;background-position:center;`
+      : `background:linear-gradient(135deg,var(--black-2),var(--black-3));`;
+    return `<div class="skill-card" style="${style}"><div class="skill-card-overlay"></div><span class="skill-card-name">${esc(s.name)}</span></div>`;
+  }).join('') : '<div style="grid-column:1/-1;text-align:center;font-size:.6rem;color:var(--gray-400);padding:1rem;">Nenhuma competência cadastrada.</div>';
 
   return `<div class="page"><div class="page-inner"><div class="skills-page"><h2>COMPETÊNCIAS</h2><div class="skills-grid">${items}</div><div class="page-number">${pn}</div></div></div></div>`;
 }
