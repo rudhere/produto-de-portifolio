@@ -422,7 +422,7 @@ img{max-width:100%;display:block}
 
 /* ===== WATERMARK ===== */
 .watermark{
-  position:absolute;inset:0;
+  position:absolute;top:0;right:0;bottom:0;left:0;
   display:flex;align-items:center;justify-content:center;
   pointer-events:none;z-index:3;
   font-family:var(--font-display);
@@ -442,14 +442,14 @@ img{max-width:100%;display:block}
   height:100%;
 }
 .cover-bg{
-  position:absolute;inset:0;z-index:0;
+  position:absolute;top:0;right:0;bottom:0;left:0;z-index:0;
   overflow:hidden;
 }
 .cover-bg img{
   width:100%;height:100%;object-fit:cover;
 }
 .cover-overlay{
-  position:absolute;inset:0;
+  position:absolute;top:0;right:0;bottom:0;left:0;
   background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.75) 60%,rgba(0,0,0,.95) 100%);
   z-index:1;
 }
@@ -501,7 +501,7 @@ img{max-width:100%;display:block}
   display:flex;align-items:center;gap:.25rem;
 }
 /* ===== TOC ===== */
-.toc{padding:2rem;flex:1;display:flex;flex-direction:column;min-height:0}
+.toc{padding:2rem 2rem 2.5rem;flex:1;display:flex;flex-direction:column;min-height:0}
 .toc h2{
   font-family:var(--font-display);
   font-size:2rem;
@@ -554,7 +554,7 @@ img{max-width:100%;display:block}
 
 /* ===== ABOUT PAGE ===== */
 .about{display:grid;grid-template-columns:1.2fr 1fr;flex:1;min-height:0}
-.about-left{padding:1.5rem;display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--gray-200);}
+.about-left{padding:1.5rem 1.5rem 2rem;display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--gray-200);}
 .about-left h2{
   font-family:var(--font-display);
   font-size:1.6rem;
@@ -578,7 +578,7 @@ img{max-width:100%;display:block}
 .about-left .about-bio{
   font-size:.58rem;
   color:var(--gray-600);
-  line-height:1.7;
+  line-height:1.5;
   flex:1;
   overflow-y:auto;
   min-height:0;
@@ -588,40 +588,43 @@ img{max-width:100%;display:block}
   overflow:hidden;
   display:flex;
   flex-direction:column;
+  min-height:0;
 }
 .about-right .about-photo{
-  width:100%;height:50%;
+  width:100%;
+  aspect-ratio:3/2;
   object-fit:cover;
   flex-shrink:0;
+  max-height:45%;
 }
 .about-cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:.3rem;
-  padding:.5rem .6rem;
+  display:flex;
+  flex-direction:column;
+  gap:.25rem;
+  padding:.35rem .55rem .55rem;
   flex:1;
   min-height:0;
   overflow:hidden;
-  align-content:center;
+  justify-content:center;
 }
 .about-card{
-  border:1px solid var(--gray-200);
-  border-radius:2px;
-  padding:.3rem .5rem;
+  border:none;
+  border-left:2px solid var(--gold);
+  border-radius:0;
+  padding:.15rem 0 .15rem .5rem;
   display:flex;
   align-items:center;
-  gap:.35rem;
+  gap:.3rem;
   min-height:0;
 }
-.about-card .card-icon{font-size:.7rem;color:var(--gold);flex-shrink:0;line-height:1;width:12px;text-align:center}
+.about-card .card-icon{display:none}
 .about-card .card-label{
   font-family:var(--font-caption);
-  font-size:.5rem;
-  text-transform:uppercase;
-  letter-spacing:.04em;
+  font-size:.48rem;
+  letter-spacing:.03em;
   color:var(--gray-600);
   font-weight:600;
-  line-height:1.2;
+  line-height:1.3;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -636,11 +639,11 @@ img{max-width:100%;display:block}
   min-height:0;
 }
 .report-opening .rop-bg{
-  position:absolute;inset:0;z-index:0;
+  position:absolute;top:0;right:0;bottom:0;left:0;z-index:0;
 }
 .report-opening .rop-bg img{width:100%;height:100%;object-fit:cover}
 .report-opening .rop-overlay{
-  position:absolute;inset:0;
+  position:absolute;top:0;right:0;bottom:0;left:0;
   background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.6) 50%,rgba(0,0,0,.9) 100%);
   z-index:1;
 }
@@ -690,7 +693,7 @@ img{max-width:100%;display:block}
 }
 
 /* ===== REPORT GALLERY PAGE ===== */
-.rpage{padding:1rem;flex:1;display:flex;flex-direction:column;gap:.5rem;min-height:0}
+.rpage{padding:1rem 1rem 1.5rem;flex:1;display:flex;flex-direction:column;gap:.5rem;min-height:0}
 .rpage-header{}
 .rpage-header h3{
   font-family:var(--font-display);
@@ -709,7 +712,7 @@ img{max-width:100%;display:block}
 .rpage-grid.layout-3{grid-template-columns:1fr 1fr 1fr}
 .rpage-grid.layout-mixed{
   grid-template-columns:1fr 1fr;
-  grid-auto-rows:minmax(80px,auto);
+  grid-auto-rows:minmax(60px,1fr);
 }
 .rpage-grid .photo-cell{
   overflow:hidden;
@@ -802,7 +805,7 @@ img{max-width:100%;display:block}
 .eq-group ul li::before{content:"—";color:var(--gold);font-size:.5rem}
 
 /* ===== SKILLS PAGE ===== */
-.skills-page{padding:1.2rem;flex:1;display:flex;flex-direction:column;min-height:0}
+.skills-page{padding:1.2rem 1.2rem 2rem;flex:1;display:flex;flex-direction:column;min-height:0}
 .skills-page h2{
   font-family:var(--font-display);
   font-size:1.5rem;
@@ -842,7 +845,7 @@ img{max-width:100%;display:block}
   background:linear-gradient(135deg,var(--black-2),var(--black-3));
 }
 .skill-card-overlay{
-  position:absolute;inset:0;
+  position:absolute;top:0;right:0;bottom:0;left:0;
   background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.7) 100%);
   z-index:0;
 }
@@ -861,7 +864,7 @@ img{max-width:100%;display:block}
 }
 
 /* ===== PUBLICATIONS PAGE ===== */
-.pubs-page{padding:1.2rem;flex:1;display:flex;flex-direction:column;min-height:0}
+.pubs-page{padding:1.2rem 1.2rem 2rem;flex:1;display:flex;flex-direction:column;min-height:0}
 .pubs-page h2{
   font-family:var(--font-display);
   font-size:1.5rem;
@@ -900,12 +903,12 @@ img{max-width:100%;display:block}
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:2rem;
+  padding:2rem 2rem 2.5rem;
   min-height:0;
   text-align:center;
 }
 .final-page .final-bg{
-  position:absolute;inset:0;z-index:0;
+  position:absolute;top:0;right:0;bottom:0;left:0;z-index:0;
   opacity:.06;
   display:flex;align-items:center;justify-content:center;
   font-size:8rem;
@@ -983,7 +986,7 @@ img{max-width:100%;display:block}
 
 /* ===== MODAL ===== */
 .modal-overlay{
-  position:fixed;inset:0;
+  position:fixed;top:0;right:0;bottom:0;left:0;
   background:rgba(0,0,0,.6);
   z-index:200;
   display:none;
@@ -1071,6 +1074,18 @@ img{max-width:100%;display:block}
 }
 .gthumb:hover .photo-size-select{opacity:1}
 
+/* ===== PRINT ===== */
+@media print {
+  @page { size: A4; margin: 0; }
+  body { background: #fff !important; padding: 0 !important; margin: 0 !important; display: block !important; overflow: visible !important; height: auto !important; }
+  .app-header, .editor-panel, .preview-panel, .modal-overlay, .toast, #previewPanel { display: none !important; }
+  .preview-pages { display: block !important; }
+  .page { width: 210mm !important; height: 297mm !important; box-shadow: none !important; margin: 0 !important; page-break-after: always !important; overflow: hidden !important; }
+  .page-inner { width: 210mm !important; height: 297mm !important; }
+  :root { --page-scale: 1; --pw: 210mm; --ph: 297mm; }
+  ::-webkit-scrollbar { display: none; }
+}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:1100px){
   .editor-panel{min-width:280px;max-width:380px}
@@ -1135,7 +1150,7 @@ img{max-width:100%;display:block}
       </div>
       <div class="form-row">
         <div class="form-group"><label>Cidade</label><input type="text" id="f_city" oninput="sync()" placeholder="São Paulo, SP"></div>
-        <div class="form-group"><label>LinkedIn</label><input type="text" id="f_linkedin" oninput="sync()" placeholder="linkedin.com/in/seuperfil"></div>
+        <div class="form-group"><label>Instagram</label><input type="text" id="f_linkedin" oninput="sync()" placeholder="instagram.com/seuperfil"></div>
       </div>
       <div class="form-group"><label>Foto de capa (fundo da capa)</label><input type="file" accept="image/*" onchange="handleCoverPhoto(event)"></div>
       <div id="coverPhotoPreview" style="max-height:60px;overflow:hidden;border-radius:3px;margin-bottom:.5rem;display:none;"><img src="" style="width:100%;object-fit:cover;"></div>
@@ -1224,12 +1239,16 @@ img{max-width:100%;display:block}
         </select>
       </div>
       <div class="form-group" style="margin-top:.5rem">
-        <label>Assinatura profissional</label>
+        <label>Assinatura profissional (imagem)</label>
         <input type="file" accept="image/*" onchange="handleSig(event)" style="font-size:.7rem">
         <div id="sigPreview" style="margin-top:.3rem;display:none">
           <img src="" style="max-height:40px;">
           <button onclick="clearSig()" style="font-size:.6rem;color:#DC2626;display:block;margin-top:.2rem;">Remover</button>
         </div>
+      </div>
+      <div class="form-group">
+        <label>Assinatura textual</label>
+        <input type="text" id="sigText" placeholder="Zenildo Trajano" oninput="syncSigText()" style="font-size:.75rem;">
       </div>
       <hr style="border:none;border-top:1px solid var(--gray-200);margin:1rem 0">
       <button class="btn btn-danger btn-full" onclick="clearAll()">Limpar Todos os Dados</button>
@@ -1317,7 +1336,7 @@ const DEFAULTS = {
   equipment: [],
   skills: [],
   publications: [],
-  settings: { darkMode:false, watermark:false, watermarkText:'FOTOJORNALISTA', coverTemplate:'1', signature:'', skillsDesc:'Áreas de atuação e especialidades' }
+  settings: { darkMode:false, watermark:false, watermarkText:'FOTOJORNALISTA', coverTemplate:'1', signature:'', signatureText:'', skillsDesc:'Áreas de atuação e especialidades' }
 };
 
 let data = JSON.parse(JSON.stringify(DEFAULTS));
@@ -1352,65 +1371,54 @@ function deepMerge(base, ext){
 
 function loadSample(){
   data.profile = {
-    name:'Ana Beatriz Pereira', title:'Repórter Fotográfica | Fotojornalista',
-    phone:'(11) 98765-4321', email:'ana.pereira@email.com',
-    city:'São Paulo, SP', linkedin:'linkedin.com/in/anapereira',
-    bio:'Fotojornalista com mais de 12 anos de experiência cobrindo conflitos urbanos, manifestações sociais, documentários autorais e pautas culturais. Passagem por redações como Folha de S.Paulo, UOL e Agência Bloomberg. Vencedora do Prêmio Internacional de Fotografia de Imprensa 2023 na categoria Documentário. Mestre em Comunicação pela USP.',
+    name:'José Zenildo de Oliveira Trajano', title:'Repórter Fotográfico | Fotojornalista',
+    phone:'(61) 98506-1590', email:'josezenildotrajano.tv@gmail.com',
+    city:'Brasília, DF', linkedin:'instagram.com/zenildotrajanofotografia',
+    bio:'Fotojornalista com experiência em cobertura institucional nos poderes Judiciário, Legislativo e Executivo, além de pautas socioambientais e culturais. Atua com registro documental, contexto jornalístico e produção visual para órgãos públicos e organizações da sociedade civil.',
     photo:'', coverPhoto:''
   };
   data.reports = [
     {
-      id:'r1', title:'A Resistência do Sertão', date:'2024-03-15',
-      location:'Petrolina, PE', category:'Documentário',
-      context:'Série documental que retrata o cotidiano das comunidades ribeirinhas do Rio São Francisco. Imagens que revelam a resiliência de um povo que luta pela preservação de suas tradições e do seu território frente aos desafios da seca e do avanço do agronegócio.',
-      credits:'Fotos: Ana B. Pereira', mainPhoto:'',
-      photos:[
-        {id:'g1',src:'',caption:'Pescador no Rio São Francisco ao amanhecer',location:'Petrolina, PE',date:'2024-03-10',credit:'Ana B. Pereira',layout:'large'},
-        {id:'g2',src:'',caption:'Crianças brincando nas margens do rio',location:'Petrolina, PE',date:'2024-03-11',credit:'Ana B. Pereira',layout:'half'},
-        {id:'g3',src:'',caption:'Mulheres da comunidade preparando a colheita',location:'Petrolina, PE',date:'2024-03-12',credit:'Ana B. Pereira',layout:'half'},
-        {id:'g4',src:'',caption:'Vista aérea da comunidade ribeirinha',location:'Petrolina, PE',date:'2024-03-13',credit:'Ana B. Pereira',layout:'full'},
-      ]
+      id:'r1', title:'Diálogos pelo Clima — Programa COPAÍBAS', date:'2026-06-01',
+      location:'Brasília, DF', category:'Documentário',
+      context:'Iniciativa Diálogos pelo Clima (DPC), do Programa COPAÍBAS, chega a 2026 com o saldo de seis livros editados e mais quatro em planejamento. As publicações são resultado dos debates promovidos entre profissionais do sistema de Justiça e representantes da sociedade civil sobre mudanças climáticas e combate ao desmatamento na Amazônia e no Cerrado.',
+      credits:'Fotos: José Zenildo de Oliveira Trajano/FUNBIO', mainPhoto:'',
+      photos:[]
     },
     {
-      id:'r2', title:'Vozes nas Ruas', date:'2024-01-20',
-      location:'São Paulo, SP', category:'Evento',
-      context:'Cobertura das manifestações pelos direitos climáticos que reuniram mais de 50 mil pessoas na Avenida Paulista. Um registro da força do ativismo jovem e da luta por justiça ambiental no Brasil.',
-      credits:'Fotos: Ana B. Pereira', mainPhoto:'',
-      photos:[
-        {id:'g5',src:'',caption:'Multidão na Avenida Paulista',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'full'},
-        {id:'g6',src:'',caption:'Cartazes e bandeiras do movimento',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'half'},
-        {id:'g7',src:'',caption:'Líder jovem discursando',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'tall'},
-        {id:'g8',src:'',caption:'Policiamento e organização do evento',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'half'},
-        {id:'g9',src:'',caption:'Pôr do sol sobre a manifestação',location:'São Paulo, SP',date:'2024-01-20',credit:'Ana B. Pereira',layout:'large'},
-      ]
+      id:'r2', title:'Reunião do Consepre com Ministros do STF', date:'2023-09-26',
+      location:'Brasília, DF', category:'Evento',
+      context:'O TJDFT sediou reunião do Conselho de Presidentes de Tribunais de Justiça do Brasil (Consepre) com os Ministros do STF Luís Roberto Barroso e Edson Fachin. O objetivo foi abrir espaço de diálogo sobre os desafios enfrentados pelos Tribunais de Justiça do país.',
+      credits:'Fotos: Zenildo Trajano', mainPhoto:'',
+      photos:[]
+    },
+    {
+      id:'r3', title:'Rede PopRuaJud — População em Situação de Rua', date:'2026-03-11',
+      location:'Brasília, DF', category:'Evento',
+      context:'O CNJ realizou a abertura do segundo dia de atividades da Rede PopRuaJud 2026 — iniciativa voltada à Política Nacional de Atenção às Pessoas em Situação de Rua e suas interseccionalidades. O encontro reuniu representantes do sistema de Justiça, órgãos públicos e movimentos sociais.',
+      credits:'Fotos: Zenildo Trajano/CNJ', mainPhoto:'',
+      photos:[]
     }
   ];
   data.equipment = [
-    {id:'e1',name:'Sony A7R V',type:'camera'},
-    {id:'e2',name:'Canon EOS R3',type:'camera'},
-    {id:'e3',name:'24-70mm f/2.8 GM II',type:'lens'},
-    {id:'e4',name:'70-200mm f/2.8 GM II',type:'lens'},
-    {id:'e5',name:'16-35mm f/2.8 GM',type:'lens'},
-    {id:'e6',name:'DJI Mavic 3 Pro',type:'drone'},
-    {id:'e7',name:'iPhone 15 Pro Max',type:'smartphone'},
-    {id:'e8',name:'GoPro Hero 12',type:'extra'},
-    {id:'e9',name:'Microfone Rode NTG5',type:'extra'},
+    {id:'e1',name:'Canon R6 Mark II',type:'camera'},
+    {id:'e2',name:'RF 24-105mm f/4 L',type:'lens'},
+    {id:'e3',name:'RF 85mm f/2 L',type:'lens'},
   ];
   data.skills = [
     {id:'sk1',name:'Fotojornalismo'},
     {id:'sk2',name:'Cobertura de Eventos'},
-    {id:'sk3',name:'Edição (Lightroom/Photoshop)'},
-    {id:'sk4',name:'Produção Visual'},
-    {id:'sk5',name:'Reportagem Documental'},
-    {id:'sk6',name:'Direção de Fotografia'},
-    {id:'sk7',name:'Ética Jornalística'},
-    {id:'sk8',name:'Pautas Investigativas'},
+    {id:'sk3',name:'Edição Lightroom'},
+    {id:'sk4',name:'Edição Photoshop'},
   ];
   data.publications = [
-    {id:'p1',name:'Folha de S.Paulo',link:'https://folha.uol.com.br',date:'2024-01-10',description:'Série de reportagens fotográficas sobre ocupações urbanas na região metropolitana de SP.'},
-    {id:'p2',name:'National Geographic Brasil',link:'https://nationalgeographic.com',date:'2023-08-05',description:'Ensaio documental "O Sertão e suas Vozes" — 12 páginas sobre comunidades ribeirinhas.'},
-    {id:'p3',name:'The Guardian',link:'https://theguardian.com',date:'2023-11-20',description:'Cobertura internacional das manifestações climáticas no Brasil.'},
+    {id:'p1',name:'FUNBIO',link:'https://www.funbio.org.br/andreia-mello-faz-balanco-da-iniciativa-dialogos-pelo-clima-do-programa-copaibas/',date:'2026-06-01',description:'Andréia Mello faz balanço da iniciativa Diálogos pelo Clima, do Programa COPAÍBAS.'},
+    {id:'p2',name:'TJDFT',link:'https://www.tjdft.jus.br/institucional/imprensa/noticias/2023/setembro/tjdft-sedia-reuniao-de-ministros-do-stf-com-o-conselho-de-presidentes-dos-tribunais-do-justica-do-brasil',date:'2023-09-26',description:'TJDFT sedia reunião do Conselho de Presidentes dos Tribunais de Justiça do Brasil com Ministros do STF.'},
+    {id:'p3',name:'CNJ',link:'https://www.cnj.jus.br/encontro-reforca-o-compromisso-institucional-com-populacao-em-situacao-de-rua/',date:'2026-03-11',description:'Encontro reforça o compromisso institucional com população em situação de rua — Rede PopRuaJud 2026.'},
   ];
+  data.settings.signature = '';
+  data.settings.signatureText = 'Zenildo Trajano';
+  data.settings.skillsDesc = 'Áreas de atuação e especialidades';
   repIdCounter = 10;
 }
 
@@ -1457,6 +1465,7 @@ function gather(){
   s.watermark = document.getElementById('chkWatermark').checked;
   s.watermarkText = document.getElementById('wmText').value || 'FOTOJORNALISTA';
   s.coverTemplate = document.getElementById('coverTmpl').value;
+  s.signatureText = document.getElementById('sigText').value || '';
   document.getElementById('wmTextGroup').style.display = s.watermark ? 'block' : 'none';
 }
 
@@ -1508,6 +1517,10 @@ function clearSig(){
   document.getElementById('sigPreview').style.display = 'none';
   save(); renderPreview();
 }
+function syncSigText(){
+  data.settings.signatureText = document.getElementById('sigText').value || '';
+  save(); renderPreview();
+}
 function clearAll(){
   if(!confirm('Todos os dados serão perdidos. Continuar?')) return;
   localStorage.removeItem(KEY);
@@ -1553,6 +1566,7 @@ function renderEditor(){
     document.getElementById('sigPreview').style.display = 'block';
     document.getElementById('sigPreview').querySelector('img').src = data.settings.signature;
   }
+  document.getElementById('sigText').value = data.settings.signatureText || '';
 
   document.getElementById('skDesc').value = data.settings.skillsDesc || 'Áreas de atuação e especialidades';
 
@@ -1951,9 +1965,9 @@ function makeCover(pn){
   } else if(tmpl === '2'){
     inner = `
       <div class="cover" style="display:grid;grid-template-columns:1fr 1fr;">
-        <div style="overflow:hidden;background:var(--black);display:flex;flex-direction:column;justify-content:center;padding:1.5rem;">
+        <div style="overflow:hidden;background:#0D0D0D;display:flex;flex-direction:column;justify-content:center;padding:1.5rem;">
           <div class="cover-tag" style="margin-bottom:.2rem;">Portfólio Profissional</div>
-          <h1 style="font-size:2.2rem;line-height:.9;color:var(--white);">PORTFÓLIO<br><span class="gold">REPÓRTER</span><br>FOTOGRÁFICO</h1>
+          <h1 style="font-size:2.2rem;line-height:.9;color:#FFFFFF;">PORTFÓLIO<br><span class="gold">REPÓRTER</span><br>FOTOGRÁFICO</h1>
           <div class="cover-name" style="font-size:.7rem;margin-top:.5rem;color:rgba(255,255,255,.7);">${esc(p.name)}</div>
           <div class="cover-contact" style="margin-top:.3rem;">
             ${p.phone ? `<span>${esc(p.phone)}</span>` : ''}
@@ -1987,13 +2001,15 @@ function makeCover(pn){
   return `<div class="page"><div class="page-inner">${inner}</div></div>`;
 }
 
+function pad2(n){return String(n).padStart(2,'0')}
+
 function makeTOC(pn){
   let items = '';
-  let tp = 3; // starts at about page
+  let tp = 3;
   items += `<li><span class="toc-num">01</span><span class="toc-title">Sobre Mim</span><span class="toc-page-num">${tp}</span></li>`;
   data.reports.forEach((r,i) => {
     tp++;
-    const num = String(i+2).padStart(2,'0');
+    const num = pad2(i+2);
     items += `<li><span class="toc-num">${num}</span><span class="toc-title">${esc(r.title||'Reportagem')}</span><span class="toc-page-num">${tp}</span></li>`;
     const extraPages = Math.max(0, Math.ceil((r.photos||[]).length / 4) - 1);
     tp += extraPages;
@@ -2002,33 +2018,32 @@ function makeTOC(pn){
   const skPage = eqPage + 1;
   const pubPage = skPage + 1;
   const finPage = pubPage + 1;
-  items += `<li><span class="toc-num">0${data.reports.length+2}</span><span class="toc-title">Equipamentos</span><span class="toc-page-num">${eqPage}</span></li>`;
-  items += `<li><span class="toc-num">0${data.reports.length+3}</span><span class="toc-title">Competências</span><span class="toc-page-num">${skPage}</span></li>`;
-  items += `<li><span class="toc-num">0${data.reports.length+4}</span><span class="toc-title">Publicações</span><span class="toc-page-num">${pubPage}</span></li>`;
-  items += `<li><span class="toc-num">0${data.reports.length+5}</span><span class="toc-title">Contato</span><span class="toc-page-num">${finPage}</span></li>`;
+  const rCount = Math.max(0, data.reports.length);
+  items += `<li><span class="toc-num">${pad2(rCount+2)}</span><span class="toc-title">Equipamentos</span><span class="toc-page-num">${eqPage}</span></li>`;
+  items += `<li><span class="toc-num">${pad2(rCount+3)}</span><span class="toc-title">Competências</span><span class="toc-page-num">${skPage}</span></li>`;
+  items += `<li><span class="toc-num">${pad2(rCount+4)}</span><span class="toc-title">Publicações</span><span class="toc-page-num">${pubPage}</span></li>`;
+  items += `<li><span class="toc-num">${pad2(rCount+5)}</span><span class="toc-title">Contato</span><span class="toc-page-num">${finPage}</span></li>`;
 
   return `<div class="page"><div class="page-inner"><div class="toc"><h2>SUMÁRIO</h2><div class="toc-sub">Portfólio Profissional</div><div class="toc-line"></div><ul class="toc-list">${items}</ul><div class="page-number">${pn}</div></div></div></div>`;
 }
 
 function makeAbout(pn){
   const p = data.profile;
-  const skills = data.skills.length ? data.skills.slice(0,8) : [];
-  const dots = ['●','●','●','●','●','●','●','●'];
-  const skDesc = data.settings.skillsDesc || 'Áreas de atuação e especialidades';
+  const skills = data.skills.length ? data.skills : [];
 
   return `<div class="page"><div class="page-inner">
     <div class="about">
       <div class="about-left">
         <h2>SOBRE MIM</h2>
-        <div class="about-sub">Repórter Fotográfico</div>
+        <div class="about-sub">${esc(p.title || 'Repórter Fotográfico')}</div>
         <div class="about-bio">${esc(p.bio || 'Sem biografia cadastrada.')}</div>
       </div>
       <div class="about-right">
         ${p.photo ? `<img class="about-photo" src="${p.photo}">` : '<div style="height:50%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;">Foto</div>'}
         <div class="about-cards">
-          ${skills.length ? skills.map((s,i) =>
-            `<div class="about-card"><div class="card-icon">${dots[i%dots.length]}</div><div class="card-label">${esc(s.name)}</div></div>`
-          ).join('') : '<div class="about-card" style="grid-column:1/-1;justify-content:center;align-items:center;"><div class="card-label" style="color:var(--gray-400);">Adicione competências</div></div>'}
+          ${skills.length ? skills.map(s =>
+            `<div class="about-card"><div class="card-label">${esc(s.name)}</div></div>`
+          ).join('') : '<div class="about-card"><div class="card-label" style="color:var(--gray-400);">Adicione competências</div></div>'}
         </div>
       </div>
     </div>
@@ -2071,9 +2086,9 @@ function makeReportPage(r, photos, isFirst, pn){
     let cls = 'photo-cell';
     const lay = p.layout || 'half';
     if(lay === 'full') cls += ' full-w';
-    else if(lay === 'tall') cls += ' tall span-2';
+    else if(lay === 'tall') cls += ' tall';
     else if(lay === 'large') cls += ' span-2 span-row-2';
-    const imgStyle = lay === 'tall' ? 'object-fit:cover;' : 'object-fit:cover;';
+    const imgStyle = 'object-fit:cover;';
     const cap = p.caption ? esc(p.caption) : '';
     const loc = p.location ? esc(p.location) : '';
     const dt = p.date || '';
@@ -2142,6 +2157,12 @@ function makePublicationsPage(pn){
 function makeFinalPage(pn){
   const p = data.profile;
   const sig = data.settings.signature;
+  const sigText = data.settings.signatureText || '';
+  const sigHtml = sig
+    ? `<img src="${sig}"><div class="sig-label">Assinatura Profissional</div>`
+    : sigText
+      ? `<div style="font-family:var(--font-title);font-size:.9rem;font-weight:300;color:var(--gray-600);letter-spacing:.08em;">${esc(sigText)}</div><div class="sig-label">Assinatura Profissional</div>`
+      : '';
   return `<div class="page"><div class="page-inner"><div class="final-page">
     <div class="final-bg">◈</div>
     <h2>CONTATO</h2>
@@ -2153,7 +2174,7 @@ function makeFinalPage(pn){
       ${p.city ? `<span>${esc(p.city)}</span>` : ''}
       ${p.linkedin ? `<span>${esc(p.linkedin)}</span>` : ''}
     </div>
-    ${sig ? `<div class="final-sig"><img src="${sig}"><div class="sig-label">Assinatura Profissional</div></div>` : ''}
+    ${sigHtml ? `<div class="final-sig">${sigHtml}</div>` : ''}
     <div class="page-number">${pn}</div>
   </div></div></div>`;
 }
@@ -2168,49 +2189,98 @@ function addWatermarks(html){
 
 // ==================== EXPORT ====================
 function exportPDF(){
-  toast('Gerando PDF...');
+  if(typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined'){
+    toast('Bibliotecas não carregadas. Verifique sua conexão.');
+    return;
+  }
+
   const pages = document.querySelectorAll('.page');
-  if(!pages.length){toast('Nada para exportar.');return;}
+  if(!pages.length){ toast('Nada para exportar.'); return; }
+
+  toast('Gerando PDF...');
+
   const {jsPDF} = window.jspdf;
   const pdf = new jsPDF('p','mm','a4');
   const pw = 210, ph = 297;
-  let chain = Promise.resolve();
 
-  pages.forEach((page, i) => {
-    chain = chain.then(() =>
-      html2canvas(page, {scale:2, useCORS:true, allowTaint:false, backgroundColor:'#FFFFFF', logging:false})
-      .then(canvas => {
-        const d = canvas.toDataURL('image/jpeg',0.95);
-        if(i > 0) pdf.addPage();
-        pdf.addImage(d,'JPEG',0,0,pw,ph,undefined,'FAST');
-      })
-    );
+  // Fixed high-quality scale. The previous scale, derived from --page-scale,
+  // could grow very large (up to 6x) causing huge canvases whose content
+  // (grids, flex boxes with min-height:0) got measured by scrollHeight
+  // instead of the visible, clipped box — that mismatch is what stretched
+  // images and cut off context blocks when jammed into the fixed A4 size below.
+  const scale = 3;
+
+  const imgs = document.querySelectorAll('.page img');
+  const loads = Array.from(imgs).map(img => {
+    if(img.complete && img.naturalWidth > 0) return Promise.resolve();
+    return new Promise(r => { img.onload = r; img.onerror = r; });
   });
 
-  chain.then(() => {
-    pdf.save('portfolio_fotojornalismo.pdf');
-    toast('PDF exportado com sucesso!');
-  }).catch(e => {console.error(e);toast('Erro ao exportar PDF.');});
+  Promise.all(loads)
+    .then(() => new Promise(r => setTimeout(r, 300)))
+    .then(() => {
+      let chain = Promise.resolve();
+      pages.forEach((page, i) => {
+        chain = chain.then(() => {
+          // Lock the capture to the page's own rendered box (offsetWidth/
+          // offsetHeight) instead of letting html2canvas auto-size the canvas
+          // from scrollWidth/scrollHeight of overflowing children. This keeps
+          // every captured page at the exact A4 aspect ratio, so addImage
+          // below never has to stretch/squeeze it, and content that's meant
+          // to be clipped by overflow:hidden (e.g. context blocks, long grids)
+          // stays clipped instead of bleeding into the image.
+          const w = page.offsetWidth;
+          const h = page.offsetHeight;
+          return html2canvas(page, {
+            scale: scale,
+            width: w,
+            height: h,
+            windowWidth: w,
+            windowHeight: h,
+            scrollX: 0,
+            scrollY: 0,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#FFFFFF',
+            logging: false,
+            onclone: (clonedDoc, clonedEl) => {
+              clonedEl.style.width = w + 'px';
+              clonedEl.style.height = h + 'px';
+              clonedEl.style.overflow = 'hidden';
+            }
+          }).then(canvas => {
+            const d = canvas.toDataURL('image/jpeg', 0.95);
+            if(i > 0) pdf.addPage();
+            pdf.addImage(d, 'JPEG', 0, 0, pw, ph, undefined, 'FAST');
+          });
+        });
+      });
+      return chain;
+    })
+    .then(() => {
+      pdf.save('portfolio_fotojornalismo.pdf');
+      toast('PDF exportado com sucesso!');
+    })
+    .catch(e => {
+      console.error('PDF export error:', e);
+      toast('Erro ao exportar PDF. Verifique o console (F12).');
+    });
 }
 
 function exportHTML(){
+  gather();
   const styleTags = document.querySelectorAll('style');
   let styles = '';
   styleTags.forEach(s => styles += s.innerHTML);
-  // override variables for print
   const printStyles = `
-  body{background:#fff;padding:20px;display:flex;flex-direction:column;align-items:center;}
-  .page{width:210mm;min-height:297mm;box-shadow:none;margin-bottom:10mm;}
-  :root{--white:#fff;--black:#0D0D0D;--black-2:#1A1A1A;--black-3:#2A2A2A;
-    --gray-50:#FAFAFA;--gray-100:#F5F5F5;--gray-200:#E8E8E8;--gray-300:#D9D9D9;
-    --gray-400:#B0B0B0;--gray-500:#888888;--gray-600:#666666;--gray-700:#4A4A4A;
-    --gold:#D6A300;--gold-light:#FFC107;--gold-dark:#B38800;}
-  [data-theme]{--white:#fff;--black:#0D0D0D;--black-2:#1A1A1A;--black-3:#2A2A2A;
-    --gray-50:#FAFAFA;--gray-100:#F5F5F5;--gray-200:#E8E8E8;--gray-300:#D9D9D9;
-    --gray-400:#B0B0B0;--gray-500:#888888;--gray-600:#666666;--gray-700:#4A4A4A;
-    --gold:#D6A300;--gold-light:#FFC107;--gold-dark:#B38800;}
+  body{background:#fff;padding:0;display:flex;flex-direction:column;align-items:center;margin:0;}
+  .page{width:210mm;height:297mm;box-shadow:none;margin:0;page-break-after:always;}
+  .page-inner{width:210mm;height:297mm;}
+  :root{--pw:210mm;--ph:297mm;--page-scale:1;}
+  @page{size:A4;margin:0;}
+  @media print{body{padding:0;}}
   `;
-  const pagesHTML = document.querySelector('.preview-pages')?.innerHTML || '';
+  const pagesHTML = addWatermarks(buildPages().join('\n'));
   const full = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head><meta charset="UTF-8"><title>Portfólio - ${esc(data.profile.name)}</title>
